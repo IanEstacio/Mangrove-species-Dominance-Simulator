@@ -1,0 +1,2049 @@
+package mangrove_dynamics;
+
+import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Currency;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Locale;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Random;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.Stack;
+import java.util.Timer;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.Vector;
+import java.awt.Color;
+import java.awt.Font;
+import com.anylogic.engine.connectivity.ResultSet;
+import com.anylogic.engine.connectivity.Statement;
+import com.anylogic.engine.elements.*;
+import com.anylogic.engine.markup.Network;
+import com.anylogic.engine.Position;
+import com.anylogic.engine.markup.PedFlowStatistics;
+import com.anylogic.engine.markup.DensityMap;
+
+
+import static java.lang.Math.*;
+import static com.anylogic.engine.UtilitiesArray.*;
+import static com.anylogic.engine.UtilitiesCollection.*;
+import static com.anylogic.engine.presentation.UtilitiesColor.*;
+import static com.anylogic.engine.HyperArray.*;
+
+import com.anylogic.engine.*;
+import com.anylogic.engine.analysis.*;
+import com.anylogic.engine.connectivity.*;
+import com.anylogic.engine.database.*;
+import com.anylogic.engine.gis.*;
+import com.anylogic.engine.markup.*;
+import com.anylogic.engine.routing.*;
+import com.anylogic.engine.presentation.*;
+import com.anylogic.engine.gui.*;
+
+import java.awt.geom.Arc2D;
+
+import com.anylogic.engine.graph.algorithms.GeometryUtils.Point;
+
+import com.esri.arcgisruntime.concurrent.ListenableFuture;
+import com.esri.arcgisruntime.data.Feature;
+import com.esri.arcgisruntime.data.ServiceFeatureTable;
+import com.esri.arcgisruntime.geometry.Envelope;
+import com.esri.arcgisruntime.geometry.SpatialReferences;
+import com.esri.arcgisruntime.layers.FeatureLayer;
+import com.esri.arcgisruntime.mapping.ArcGISMap;
+import com.esri.arcgisruntime.mapping.Basemap;
+import com.esri.arcgisruntime.mapping.Viewpoint;
+import com.esri.arcgisruntime.mapping.view.IdentifyLayerResult;
+import com.esri.arcgisruntime.mapping.view.MapView;
+//import oracle.sql.ARRAY; 
+
+public class Mangrove extends Agent
+{
+  // Parameters
+
+  public 
+double  offspringdcons;
+
+  /**
+   * Returns default value for parameter <code>offspringdcons</code>.
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  public double _offspringdcons_DefaultValue_xjal() {
+    final Mangrove self = this;
+    return 
+0.5 //per m^2 //needs changing since thinning is considered  
+;
+  }
+
+  public void set_offspringdcons( double offspringdcons ) {
+    if (offspringdcons == this.offspringdcons) {
+      return;
+    }
+    double _oldValue_xjal = this.offspringdcons;
+    this.offspringdcons = offspringdcons;
+    onChange_offspringdcons_xjal( _oldValue_xjal );
+    onChange();
+  }
+
+  /**
+   * Calls "On change" action for parameter offspringdcons.<br>
+   * Note that 'oldValue' in that action will be unavailable if this method is called by user
+   * (current parameter value will be passed as 'oldValue').<br>
+   * Please call <code>set_offspringdcons()</code> method instead.
+   */
+  protected void onChange_offspringdcons() {
+    onChange_offspringdcons_xjal( offspringdcons );
+  }
+
+  @AnyLogicInternalCodegenAPI
+  protected void onChange_offspringdcons_xjal( double oldValue ) {  
+  }
+
+
+  public 
+double  hmaxcons;
+
+  /**
+   * Returns default value for parameter <code>hmaxcons</code>.
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  public double _hmaxcons_DefaultValue_xjal() {
+    final Mangrove self = this;
+    return 0.0;
+  }
+
+  public void set_hmaxcons( double hmaxcons ) {
+    if (hmaxcons == this.hmaxcons) {
+      return;
+    }
+    double _oldValue_xjal = this.hmaxcons;
+    this.hmaxcons = hmaxcons;
+    onChange_hmaxcons_xjal( _oldValue_xjal );
+    onChange();
+  }
+
+  /**
+   * Calls "On change" action for parameter hmaxcons.<br>
+   * Note that 'oldValue' in that action will be unavailable if this method is called by user
+   * (current parameter value will be passed as 'oldValue').<br>
+   * Please call <code>set_hmaxcons()</code> method instead.
+   */
+  protected void onChange_hmaxcons() {
+    onChange_hmaxcons_xjal( hmaxcons );
+  }
+
+  @AnyLogicInternalCodegenAPI
+  protected void onChange_hmaxcons_xjal( double oldValue ) {  
+  }
+
+
+  public 
+double  dbhmaxcons;
+
+  /**
+   * Returns default value for parameter <code>dbhmaxcons</code>.
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  public double _dbhmaxcons_DefaultValue_xjal() {
+    final Mangrove self = this;
+    return 0.0;
+  }
+
+  public void set_dbhmaxcons( double dbhmaxcons ) {
+    if (dbhmaxcons == this.dbhmaxcons) {
+      return;
+    }
+    double _oldValue_xjal = this.dbhmaxcons;
+    this.dbhmaxcons = dbhmaxcons;
+    onChange_dbhmaxcons_xjal( _oldValue_xjal );
+    onChange();
+  }
+
+  /**
+   * Calls "On change" action for parameter dbhmaxcons.<br>
+   * Note that 'oldValue' in that action will be unavailable if this method is called by user
+   * (current parameter value will be passed as 'oldValue').<br>
+   * Please call <code>set_dbhmaxcons()</code> method instead.
+   */
+  protected void onChange_dbhmaxcons() {
+    onChange_dbhmaxcons_xjal( dbhmaxcons );
+  }
+
+  @AnyLogicInternalCodegenAPI
+  protected void onChange_dbhmaxcons_xjal( double oldValue ) {  
+  }
+
+
+  public 
+double  b2cons;
+
+  /**
+   * Returns default value for parameter <code>b2cons</code>.
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  public double _b2cons_DefaultValue_xjal() {
+    final Mangrove self = this;
+    return 0.0;
+  }
+
+  public void set_b2cons( double b2cons ) {
+    if (b2cons == this.b2cons) {
+      return;
+    }
+    double _oldValue_xjal = this.b2cons;
+    this.b2cons = b2cons;
+    onChange_b2cons_xjal( _oldValue_xjal );
+    onChange();
+  }
+
+  /**
+   * Calls "On change" action for parameter b2cons.<br>
+   * Note that 'oldValue' in that action will be unavailable if this method is called by user
+   * (current parameter value will be passed as 'oldValue').<br>
+   * Please call <code>set_b2cons()</code> method instead.
+   */
+  protected void onChange_b2cons() {
+    onChange_b2cons_xjal( b2cons );
+  }
+
+  @AnyLogicInternalCodegenAPI
+  protected void onChange_b2cons_xjal( double oldValue ) {  
+  }
+
+
+  public 
+double  Gcons;
+
+  /**
+   * Returns default value for parameter <code>Gcons</code>.
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  public double _Gcons_DefaultValue_xjal() {
+    final Mangrove self = this;
+    return 0.0;
+  }
+
+  public void set_Gcons( double Gcons ) {
+    if (Gcons == this.Gcons) {
+      return;
+    }
+    double _oldValue_xjal = this.Gcons;
+    this.Gcons = Gcons;
+    onChange_Gcons_xjal( _oldValue_xjal );
+    onChange();
+  }
+
+  /**
+   * Calls "On change" action for parameter Gcons.<br>
+   * Note that 'oldValue' in that action will be unavailable if this method is called by user
+   * (current parameter value will be passed as 'oldValue').<br>
+   * Please call <code>set_Gcons()</code> method instead.
+   */
+  protected void onChange_Gcons() {
+    onChange_Gcons_xjal( Gcons );
+  }
+
+  @AnyLogicInternalCodegenAPI
+  protected void onChange_Gcons_xjal( double oldValue ) {  
+  }
+
+
+  public 
+double  b3cons;
+
+  /**
+   * Returns default value for parameter <code>b3cons</code>.
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  public double _b3cons_DefaultValue_xjal() {
+    final Mangrove self = this;
+    return 0.0;
+  }
+
+  public void set_b3cons( double b3cons ) {
+    if (b3cons == this.b3cons) {
+      return;
+    }
+    double _oldValue_xjal = this.b3cons;
+    this.b3cons = b3cons;
+    onChange_b3cons_xjal( _oldValue_xjal );
+    onChange();
+  }
+
+  /**
+   * Calls "On change" action for parameter b3cons.<br>
+   * Note that 'oldValue' in that action will be unavailable if this method is called by user
+   * (current parameter value will be passed as 'oldValue').<br>
+   * Please call <code>set_b3cons()</code> method instead.
+   */
+  protected void onChange_b3cons() {
+    onChange_b3cons_xjal( b3cons );
+  }
+
+  @AnyLogicInternalCodegenAPI
+  protected void onChange_b3cons_xjal( double oldValue ) {  
+  }
+
+
+  public 
+int  speciesnumber;
+
+  /**
+   * Returns default value for parameter <code>speciesnumber</code>.
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  public int _speciesnumber_DefaultValue_xjal() {
+    final Mangrove self = this;
+    return 0;
+  }
+
+  public void set_speciesnumber( int speciesnumber ) {
+    if (speciesnumber == this.speciesnumber) {
+      return;
+    }
+    int _oldValue_xjal = this.speciesnumber;
+    this.speciesnumber = speciesnumber;
+    onChange_speciesnumber_xjal( _oldValue_xjal );
+    onChange();
+  }
+
+  /**
+   * Calls "On change" action for parameter speciesnumber.<br>
+   * Note that 'oldValue' in that action will be unavailable if this method is called by user
+   * (current parameter value will be passed as 'oldValue').<br>
+   * Please call <code>set_speciesnumber()</code> method instead.
+   */
+  protected void onChange_speciesnumber() {
+    onChange_speciesnumber_xjal( speciesnumber );
+  }
+
+  @AnyLogicInternalCodegenAPI
+  protected void onChange_speciesnumber_xjal( int oldValue ) {  
+  }
+
+
+  public 
+String  speciesname;
+
+  /**
+   * Returns default value for parameter <code>speciesname</code>.
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  public String _speciesname_DefaultValue_xjal() {
+    final Mangrove self = this;
+    return null;
+  }
+
+  public void set_speciesname( String speciesname ) {
+    if (speciesname == this.speciesname) {
+      return;
+    }
+    String _oldValue_xjal = this.speciesname;
+    this.speciesname = speciesname;
+    onChange_speciesname_xjal( _oldValue_xjal );
+    onChange();
+  }
+
+  /**
+   * Calls "On change" action for parameter speciesname.<br>
+   * Note that 'oldValue' in that action will be unavailable if this method is called by user
+   * (current parameter value will be passed as 'oldValue').<br>
+   * Please call <code>set_speciesname()</code> method instead.
+   */
+  protected void onChange_speciesname() {
+    onChange_speciesname_xjal( speciesname );
+  }
+
+  @AnyLogicInternalCodegenAPI
+  protected void onChange_speciesname_xjal( String oldValue ) {  
+  }
+
+
+  public 
+double  Smax;
+
+  /**
+   * Returns default value for parameter <code>Smax</code>.
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  public double _Smax_DefaultValue_xjal() {
+    final Mangrove self = this;
+    return 0.0;
+  }
+
+  public void set_Smax( double Smax ) {
+    if (Smax == this.Smax) {
+      return;
+    }
+    double _oldValue_xjal = this.Smax;
+    this.Smax = Smax;
+    onChange_Smax_xjal( _oldValue_xjal );
+    onChange();
+  }
+
+  /**
+   * Calls "On change" action for parameter Smax.<br>
+   * Note that 'oldValue' in that action will be unavailable if this method is called by user
+   * (current parameter value will be passed as 'oldValue').<br>
+   * Please call <code>set_Smax()</code> method instead.
+   */
+  protected void onChange_Smax() {
+    onChange_Smax_xjal( Smax );
+  }
+
+  @AnyLogicInternalCodegenAPI
+  protected void onChange_Smax_xjal( double oldValue ) {  
+  }
+
+
+  public 
+double  WoodDens;
+
+  /**
+   * Returns default value for parameter <code>WoodDens</code>.
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  public double _WoodDens_DefaultValue_xjal() {
+    final Mangrove self = this;
+    return 0.0;
+  }
+
+  public void set_WoodDens( double WoodDens ) {
+    if (WoodDens == this.WoodDens) {
+      return;
+    }
+    double _oldValue_xjal = this.WoodDens;
+    this.WoodDens = WoodDens;
+    onChange_WoodDens_xjal( _oldValue_xjal );
+    onChange();
+  }
+
+  /**
+   * Calls "On change" action for parameter WoodDens.<br>
+   * Note that 'oldValue' in that action will be unavailable if this method is called by user
+   * (current parameter value will be passed as 'oldValue').<br>
+   * Please call <code>set_WoodDens()</code> method instead.
+   */
+  protected void onChange_WoodDens() {
+    onChange_WoodDens_xjal( WoodDens );
+  }
+
+  @AnyLogicInternalCodegenAPI
+  protected void onChange_WoodDens_xjal( double oldValue ) {  
+  }
+
+
+  public 
+String  SaltTol;
+
+  /**
+   * Returns default value for parameter <code>SaltTol</code>.
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  public String _SaltTol_DefaultValue_xjal() {
+    final Mangrove self = this;
+    return null;
+  }
+
+  public void set_SaltTol( String SaltTol ) {
+    if (SaltTol == this.SaltTol) {
+      return;
+    }
+    String _oldValue_xjal = this.SaltTol;
+    this.SaltTol = SaltTol;
+    onChange_SaltTol_xjal( _oldValue_xjal );
+    onChange();
+  }
+
+  /**
+   * Calls "On change" action for parameter SaltTol.<br>
+   * Note that 'oldValue' in that action will be unavailable if this method is called by user
+   * (current parameter value will be passed as 'oldValue').<br>
+   * Please call <code>set_SaltTol()</code> method instead.
+   */
+  protected void onChange_SaltTol() {
+    onChange_SaltTol_xjal( SaltTol );
+  }
+
+  @AnyLogicInternalCodegenAPI
+  protected void onChange_SaltTol_xjal( String oldValue ) {  
+  }
+
+
+  public 
+String  ShadingTol;
+
+  /**
+   * Returns default value for parameter <code>ShadingTol</code>.
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  public String _ShadingTol_DefaultValue_xjal() {
+    final Mangrove self = this;
+    return null;
+  }
+
+  public void set_ShadingTol( String ShadingTol ) {
+    if (ShadingTol == this.ShadingTol) {
+      return;
+    }
+    String _oldValue_xjal = this.ShadingTol;
+    this.ShadingTol = ShadingTol;
+    onChange_ShadingTol_xjal( _oldValue_xjal );
+    onChange();
+  }
+
+  /**
+   * Calls "On change" action for parameter ShadingTol.<br>
+   * Note that 'oldValue' in that action will be unavailable if this method is called by user
+   * (current parameter value will be passed as 'oldValue').<br>
+   * Please call <code>set_ShadingTol()</code> method instead.
+   */
+  protected void onChange_ShadingTol() {
+    onChange_ShadingTol_xjal( ShadingTol );
+  }
+
+  @AnyLogicInternalCodegenAPI
+  protected void onChange_ShadingTol_xjal( String oldValue ) {  
+  }
+
+
+  public 
+double  Agemax;
+
+  /**
+   * Returns default value for parameter <code>Agemax</code>.
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  public double _Agemax_DefaultValue_xjal() {
+    final Mangrove self = this;
+    return 0.0;
+  }
+
+  public void set_Agemax( double Agemax ) {
+    if (Agemax == this.Agemax) {
+      return;
+    }
+    double _oldValue_xjal = this.Agemax;
+    this.Agemax = Agemax;
+    onChange_Agemax_xjal( _oldValue_xjal );
+    onChange();
+  }
+
+  /**
+   * Calls "On change" action for parameter Agemax.<br>
+   * Note that 'oldValue' in that action will be unavailable if this method is called by user
+   * (current parameter value will be passed as 'oldValue').<br>
+   * Please call <code>set_Agemax()</code> method instead.
+   */
+  protected void onChange_Agemax() {
+    onChange_Agemax_xjal( Agemax );
+  }
+
+  @AnyLogicInternalCodegenAPI
+  protected void onChange_Agemax_xjal( double oldValue ) {  
+  }
+
+
+  public 
+String  IntZone;
+
+  /**
+   * Returns default value for parameter <code>IntZone</code>.
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  public String _IntZone_DefaultValue_xjal() {
+    final Mangrove self = this;
+    return null;
+  }
+
+  public void set_IntZone( String IntZone ) {
+    if (IntZone == this.IntZone) {
+      return;
+    }
+    String _oldValue_xjal = this.IntZone;
+    this.IntZone = IntZone;
+    onChange_IntZone_xjal( _oldValue_xjal );
+    onChange();
+  }
+
+  /**
+   * Calls "On change" action for parameter IntZone.<br>
+   * Note that 'oldValue' in that action will be unavailable if this method is called by user
+   * (current parameter value will be passed as 'oldValue').<br>
+   * Please call <code>set_IntZone()</code> method instead.
+   */
+  protected void onChange_IntZone() {
+    onChange_IntZone_xjal( IntZone );
+  }
+
+  @AnyLogicInternalCodegenAPI
+  protected void onChange_IntZone_xjal( String oldValue ) {  
+  }
+
+
+  @Override
+  public void setParametersToDefaultValues() {
+    super.setParametersToDefaultValues();
+    offspringdcons = _offspringdcons_DefaultValue_xjal();
+    hmaxcons = _hmaxcons_DefaultValue_xjal();
+    dbhmaxcons = _dbhmaxcons_DefaultValue_xjal();
+    b2cons = _b2cons_DefaultValue_xjal();
+    Gcons = _Gcons_DefaultValue_xjal();
+    b3cons = _b3cons_DefaultValue_xjal();
+    speciesnumber = _speciesnumber_DefaultValue_xjal();
+    speciesname = _speciesname_DefaultValue_xjal();
+    Smax = _Smax_DefaultValue_xjal();
+    WoodDens = _WoodDens_DefaultValue_xjal();
+    SaltTol = _SaltTol_DefaultValue_xjal();
+    ShadingTol = _ShadingTol_DefaultValue_xjal();
+    Agemax = _Agemax_DefaultValue_xjal();
+    IntZone = _IntZone_DefaultValue_xjal();
+  }
+
+  @Override
+  public boolean setParameter(String _name_xjal, Object _value_xjal, boolean _callOnChange_xjal) {
+    switch ( _name_xjal ) {
+    case "offspringdcons":
+      if ( _callOnChange_xjal ) {
+        set_offspringdcons( ((Number) _value_xjal).doubleValue() );
+      } else {
+        offspringdcons = ((Number) _value_xjal).doubleValue();
+      }
+      return true;
+    case "hmaxcons":
+      if ( _callOnChange_xjal ) {
+        set_hmaxcons( ((Number) _value_xjal).doubleValue() );
+      } else {
+        hmaxcons = ((Number) _value_xjal).doubleValue();
+      }
+      return true;
+    case "dbhmaxcons":
+      if ( _callOnChange_xjal ) {
+        set_dbhmaxcons( ((Number) _value_xjal).doubleValue() );
+      } else {
+        dbhmaxcons = ((Number) _value_xjal).doubleValue();
+      }
+      return true;
+    case "b2cons":
+      if ( _callOnChange_xjal ) {
+        set_b2cons( ((Number) _value_xjal).doubleValue() );
+      } else {
+        b2cons = ((Number) _value_xjal).doubleValue();
+      }
+      return true;
+    case "Gcons":
+      if ( _callOnChange_xjal ) {
+        set_Gcons( ((Number) _value_xjal).doubleValue() );
+      } else {
+        Gcons = ((Number) _value_xjal).doubleValue();
+      }
+      return true;
+    case "b3cons":
+      if ( _callOnChange_xjal ) {
+        set_b3cons( ((Number) _value_xjal).doubleValue() );
+      } else {
+        b3cons = ((Number) _value_xjal).doubleValue();
+      }
+      return true;
+    case "speciesnumber":
+      if ( _callOnChange_xjal ) {
+        set_speciesnumber( ((Number) _value_xjal).intValue() );
+      } else {
+        speciesnumber = ((Number) _value_xjal).intValue();
+      }
+      return true;
+    case "speciesname":
+      if ( _callOnChange_xjal ) {
+        set_speciesname( (String) _value_xjal );
+      } else {
+        speciesname = (String) _value_xjal;
+      }
+      return true;
+    case "Smax":
+      if ( _callOnChange_xjal ) {
+        set_Smax( ((Number) _value_xjal).doubleValue() );
+      } else {
+        Smax = ((Number) _value_xjal).doubleValue();
+      }
+      return true;
+    case "WoodDens":
+      if ( _callOnChange_xjal ) {
+        set_WoodDens( ((Number) _value_xjal).doubleValue() );
+      } else {
+        WoodDens = ((Number) _value_xjal).doubleValue();
+      }
+      return true;
+    case "SaltTol":
+      if ( _callOnChange_xjal ) {
+        set_SaltTol( (String) _value_xjal );
+      } else {
+        SaltTol = (String) _value_xjal;
+      }
+      return true;
+    case "ShadingTol":
+      if ( _callOnChange_xjal ) {
+        set_ShadingTol( (String) _value_xjal );
+      } else {
+        ShadingTol = (String) _value_xjal;
+      }
+      return true;
+    case "Agemax":
+      if ( _callOnChange_xjal ) {
+        set_Agemax( ((Number) _value_xjal).doubleValue() );
+      } else {
+        Agemax = ((Number) _value_xjal).doubleValue();
+      }
+      return true;
+    case "IntZone":
+      if ( _callOnChange_xjal ) {
+        set_IntZone( (String) _value_xjal );
+      } else {
+        IntZone = (String) _value_xjal;
+      }
+      return true;
+    default:
+      return super.setParameter( _name_xjal, _value_xjal, _callOnChange_xjal );
+    }
+  }
+
+  @Override
+  public <T> T getParameter(String _name_xjal) {
+    Object _result_xjal;
+    switch ( _name_xjal ) {
+    case "offspringdcons": _result_xjal = offspringdcons; break;
+    case "hmaxcons": _result_xjal = hmaxcons; break;
+    case "dbhmaxcons": _result_xjal = dbhmaxcons; break;
+    case "b2cons": _result_xjal = b2cons; break;
+    case "Gcons": _result_xjal = Gcons; break;
+    case "b3cons": _result_xjal = b3cons; break;
+    case "speciesnumber": _result_xjal = speciesnumber; break;
+    case "speciesname": _result_xjal = speciesname; break;
+    case "Smax": _result_xjal = Smax; break;
+    case "WoodDens": _result_xjal = WoodDens; break;
+    case "SaltTol": _result_xjal = SaltTol; break;
+    case "ShadingTol": _result_xjal = ShadingTol; break;
+    case "Agemax": _result_xjal = Agemax; break;
+    case "IntZone": _result_xjal = IntZone; break;
+    default: _result_xjal = super.getParameter( _name_xjal ); break;
+    }
+    return (T) _result_xjal;
+  }
+
+  @AnyLogicInternalCodegenAPI
+  private static String[] _parameterNames_xjal;
+
+  @Override
+  public String[] getParameterNames() {
+    String[] result = _parameterNames_xjal;
+    if (result == null) {
+      List<String> list = new ArrayList<>( Arrays.asList( super.getParameterNames() ) );
+      list.add( "offspringdcons" );
+      list.add( "hmaxcons" );
+      list.add( "dbhmaxcons" );
+      list.add( "b2cons" );
+      list.add( "Gcons" );
+      list.add( "b3cons" );
+      list.add( "speciesnumber" );
+      list.add( "speciesname" );
+      list.add( "Smax" );
+      list.add( "WoodDens" );
+      list.add( "SaltTol" );
+      list.add( "ShadingTol" );
+      list.add( "Agemax" );
+      list.add( "IntZone" );
+      result = list.toArray( new String[ list.size() ] );
+      _parameterNames_xjal = result;
+    }
+    return result;
+  }
+  // Plain Variables
+
+  public 
+double 
+ dbh;
+  public 
+double 
+ d_dbh;
+  public 
+double 
+ height;
+  public 
+double 
+ basal_area;
+  public 
+double 
+ crown_area;
+  public 
+double 
+ no_of_offsprings;
+  public 
+double 
+ crown_radius;
+  public 
+double 
+ trunk_radius;
+  public 
+double 
+ AGB;
+  public 
+double 
+ CompetAbove;
+  public 
+double 
+ CompetBelow;
+  public 
+double 
+ FON_radius;
+  public 
+double 
+ f_red;
+
+  // Collection Variables
+  public 
+ArrayList <
+Double > d_dbhlist = new ArrayList<Double>();
+  @AnyLogicInternalCodegenAPI
+  private static Map<String, IElementDescriptor> elementDesciptors_xjal = createElementDescriptors( Mangrove.class );
+  
+  @AnyLogicInternalCodegenAPI
+  @Override
+  public Map<String, IElementDescriptor> getElementDesciptors() {
+    return elementDesciptors_xjal;
+  }
+  @AnyLogicCustomProposalPriority(type = AnyLogicCustomProposalPriority.Type.STATIC_ELEMENT)
+  public static final Scale scale = new Scale( 20.0 );
+
+  @Override
+  public Scale getScale() {
+    return scale;
+  }
+
+
+
+	
+
+  /** Internal constant, shouldn't be accessed by user */
+  @AnyLogicInternalCodegenAPI
+  protected static final int _STATECHART_COUNT_xjal = 1;
+
+
+  // Statecharts
+  public Statechart<Alive_state> Alive = new Statechart<>( this, (short)3 );
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public String getNameOf( Statechart _s ) {
+    if(_s == this.Alive) return "Alive";
+    return super.getNameOf( _s );
+  }
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public int getIdOf( Statechart _s ) {
+    if(_s == this.Alive) return 0;
+    return super.getIdOf( _s );
+  }
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public void executeActionOf( Statechart _s ) {
+    if( _s == this.Alive ) {
+      enterState( Established, true );
+      return;
+    }
+    super.executeActionOf( _s );
+  }
+
+   // States of all statecharts
+   
+  public enum Alive_state implements IStatechartState<Mangrove, Alive_state> {
+    Established,
+    Sapling() {
+      @Override
+      @AnyLogicInternalCodegenAPI
+      public Alive_state getContainerState() {
+        return Established;
+      }
+	},
+    Mature() {
+      @Override
+      @AnyLogicInternalCodegenAPI
+      public Alive_state getContainerState() {
+        return Established;
+      }
+	},
+    Dead;
+
+    @AnyLogicInternalCodegenAPI
+    private Collection<Alive_state> _simpleStatesDeep_xjal;
+
+    @AnyLogicInternalCodegenAPI
+    private Set<Alive_state> _fullState_xjal;
+
+    @AnyLogicInternalCodegenAPI
+    private Set<Alive_state> _statesInside_xjal;
+
+    @Override
+    @AnyLogicInternalCodegenAPI
+    public Collection<Alive_state> getSimpleStatesDeep() {
+      Collection<Alive_state> result = _simpleStatesDeep_xjal;
+      if (result == null) {
+        _simpleStatesDeep_xjal = result = calculateAllSimpleStatesDeep();
+      }
+      return result;
+    }
+    
+    @Override
+    public Set<Alive_state> getFullState() {
+      Set<Alive_state> result = _fullState_xjal;
+      if (result == null) {
+        _fullState_xjal = result = calculateFullState();
+      }
+      return result;
+    }
+    
+    @Override
+    @AnyLogicInternalCodegenAPI
+    public Set<Alive_state> getStatesInside() {
+      Set<Alive_state> result = _statesInside_xjal;
+      if (result == null) {
+        _statesInside_xjal = result = calculateStatesInside();
+      }
+      return result;
+    }
+
+    @Override
+    @AnyLogicInternalCodegenAPI
+    public Statechart<Alive_state> getStatechart( Mangrove _a ) {
+      return _a.Alive;
+    }
+  }
+  @AnyLogicCustomProposalPriority(type = AnyLogicCustomProposalPriority.Type.STATIC_ELEMENT)
+  public static final Alive_state Established = Alive_state.Established;
+  @AnyLogicCustomProposalPriority(type = AnyLogicCustomProposalPriority.Type.STATIC_ELEMENT)
+  public static final Alive_state Sapling = Alive_state.Sapling;
+  @AnyLogicCustomProposalPriority(type = AnyLogicCustomProposalPriority.Type.STATIC_ELEMENT)
+  public static final Alive_state Mature = Alive_state.Mature;
+  @AnyLogicCustomProposalPriority(type = AnyLogicCustomProposalPriority.Type.STATIC_ELEMENT)
+  public static final Alive_state Dead = Alive_state.Dead;
+
+
+  @AnyLogicInternalCodegenAPI
+  private void enterState( Alive_state self, boolean _destination ) {
+    switch( self ) {
+      case Established:
+  	    logToDBEnterState(Alive, self);
+        // (Composite state)
+        grow.start();
+        die.start();
+        if ( _destination ) {
+           enterState( Sapling, true );
+        }
+        return;
+      case Sapling:
+  	    logToDBEnterState(Alive, self);
+        // (Simple state (not composite))
+        Alive.setActiveState_xjal( Sapling );
+        transition.start();
+        return;
+      case Mature:
+  	    logToDBEnterState(Alive, self);
+        // (Simple state (not composite))
+        Alive.setActiveState_xjal( Mature );
+        reproduce.start();
+        return;
+      case Dead:
+  	    logToDBEnterState(Alive, self);
+        // (Final State)
+        {
+main.remove_mangroves(this);  
+;}
+        Alive.setActiveState_xjal( Dead );
+        Alive.onDestroy();
+        return;
+      default:
+        return;
+    }
+  }
+
+  @AnyLogicInternalCodegenAPI
+  private void exitState( Alive_state self, Transition _t, boolean _source ) {
+    switch( self ) {
+      case Established: 
+  	    logToDBExitState(Alive, self);
+  	    logToDB(Alive, _t, self);
+      // (Composite state)
+        if ( _source ) exitInnerStates(self);
+        if ( !_source || _t != grow ) grow.cancel();
+        if ( !_source || _t != die ) die.cancel();
+        return;
+      case Sapling: 
+  	    logToDBExitState(Alive, self);
+  	    logToDB(Alive, _t, self);
+      // (Simple state (not composite))
+        if ( !_source || _t != transition) transition.cancel();
+        return;
+      case Mature: 
+  	    logToDBExitState(Alive, self);
+  	    logToDB(Alive, _t, self);
+      // (Simple state (not composite))
+        if ( !_source || _t != reproduce) reproduce.cancel();
+        return;
+      default:
+        return;
+    }
+  }
+
+  @AnyLogicInternalCodegenAPI
+  private void exitInnerStates( Alive_state _destination ) {
+    Alive_state _state = Alive.getActiveSimpleState();
+    while( _state != _destination ) {
+			exitState( _state, null, false );
+			_state = _state.getContainerState();
+		}
+	}
+  
+  public TransitionTimeout grow = new TransitionTimeout( this );
+  public TransitionTimeout reproduce = new TransitionTimeout( this );
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public String getNameOf( TransitionTimeout _t ) {
+    if ( _t == grow ) return "grow";
+    if ( _t == reproduce ) return "reproduce";
+    return super.getNameOf( _t );
+  }
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public Statechart getStatechartOf( TransitionTimeout _t ) { 
+    if ( _t == grow ) return Alive;
+    if ( _t == reproduce ) return Alive;
+    return super.getStatechartOf( _t );
+  }
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public void executeActionOf( TransitionTimeout self ) {
+    if ( self == grow ) {
+      {
+Growth(); 
+;}
+      grow.start();
+      return;
+    }
+    if ( self == reproduce ) {
+      exitState( Mature, self, true );
+      {
+Reproduction(); 
+;}
+          enterState( Mature, true );
+      return;
+    }
+    super.executeActionOf( self );
+  }
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public double evaluateTimeoutOf( TransitionTimeout _t ) {
+    double _value;
+    if ( _t == grow ) {
+      _value = 
+1 
+;
+      _value = toModelTime( _value, YEAR );
+      return _value;
+    }
+    if ( _t == reproduce ) {
+      _value = 
+1 
+;
+      _value = toModelTime( _value, YEAR );
+      return _value;
+    }
+    return super.evaluateTimeoutOf( _t );
+  }
+
+  public TransitionCondition die = new TransitionCondition( this );
+  public TransitionCondition transition = new TransitionCondition( this );
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public String getNameOf( TransitionCondition _t ) {
+    if ( _t == die ) return "die";
+    if ( _t == transition ) return "transition";
+    return super.getNameOf( _t );
+  }
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public Statechart getStatechartOf( TransitionCondition _t ) { 
+    if ( _t == die ) return Alive;
+    if ( _t == transition ) return Alive;
+    return super.getStatechartOf( _t );
+  }
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public void executeActionOf( TransitionCondition self ) {
+    if ( self == die ) {
+      exitState( Established, self, true );
+          enterState( Dead, true );
+      return;
+    }
+    if ( self == transition ) {
+      exitState( Sapling, self, true );
+          enterState( Mature, true );
+      return;
+    }
+    super.executeActionOf( self );
+  }
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public boolean testConditionOf( TransitionCondition _t ) {
+    if ( _t == die ) return 
+d_dbh < 0.5*dbhmaxcons/Agemax //cm/yr 
+;
+    if ( _t == transition ) return 
+dbh >= dbhmaxcons/15 //cm 
+;
+    return super.testConditionOf( _t );
+  }
+
+
+
+  // Functions
+
+  void Reproduction(  ) { 
+
+for (int i = 0; i < no_of_offsprings; i++){
+	double dispersion_dist = SeedlingDistDispersion()*20; //px //m
+	double theta = 2*Math.PI*uniform(0, 1);
+	double x_seed = getX() + dispersion_dist*Math.cos(theta);
+	double y_seed = getY() + dispersion_dist*Math.sin(theta);
+	double salinity = -9999;
+	
+	while( x_seed < 0 || x_seed >= 1000 || y_seed < 0 || y_seed >= 1000){
+		dispersion_dist = SeedlingDistDispersion()*20; //m
+		theta = 2*Math.PI*uniform_pos();
+		x_seed = getX() + dispersion_dist*Math.cos(theta);
+		y_seed = getY() + dispersion_dist*Math.sin(theta);
+	}
+
+	boolean canbeestablished = EstablishmentBool(x_seed, y_seed);
+	if (canbeestablished == true){
+		Mangrove sapling = main.add_mangroves();
+		sapling.jumpTo(x_seed, y_seed);
+		sapling.speciesnumber = speciesnumber;
+		sapling.dbh = 1.27; //cm
+		sapling.Initializemangrove();
+	}
+} 
+  }
+
+  void Growth(  ) { 
+
+Respond_to_environment();
+
+
+double dbhgrowth =	f_red*(Gcons*dbh*(1-((dbh*height)/(dbhmaxcons*hmaxcons))))/(274+(3*b2cons*dbh)-(4*b3cons*Math.pow(dbh,2))); //cm
+
+double growth5yrs = 0;
+for (int i = 1; i < d_dbhlist.size(); i++){
+	double growthnyr = d_dbhlist.get(i);
+	d_dbhlist.set(i - 1, growthnyr);
+	growth5yrs = growth5yrs + growthnyr;
+}
+d_dbhlist.set(4, dbhgrowth);
+growth5yrs = growth5yrs + dbhgrowth; //cm
+
+dbh = dbh + dbhgrowth; //cm
+d_dbh = growth5yrs/5; //cm
+height = 137 + (b2cons*dbh) - (b3cons*Math.pow(dbh,2)); //cm
+crown_radius = 22.2*Math.pow(dbh, 0.654); //cm
+crown_area = Math.PI*Math.pow(crown_radius,2)/10000; //m^2
+FON_radius = 1.5*22.2*Math.pow(dbh, 0.654); //cm
+trunk_radius = dbh/2; //cm
+no_of_offsprings = Math.floor(f_red*offspringdcons*crown_area);
+AGB = 0.251*Math.pow(dbh, 2.46); //t/ha
+
+mangtrunk.setRadius((trunk_radius/100)*20); //px //m
+mangtrunk.setZHeight((height/100)*20); //px //m
+mangcrown.setRadius((crown_radius/100)*20); //px //m
+mangcrown.setZHeight((crown_radius*4/100)*20); //px //m
+mangcrown.setZ(((height - (crown_radius*4))/100)*20); //px //m 
+  }
+
+  void Respond_to_environment(  ) { 
+
+Competition();
+
+//Light availability
+double shadetolerant_response = 1.0 - (2*CompetAbove);
+double AL = (Math.log(1 - shadetolerant_response)/(-4.64))+ 0.05;
+double shadeintolerant_response = 2.24*(1 - Math.exp(-1.136*(AL-0.08)));
+
+double abovecompetition_response = shadetolerant_response;
+/*if (ShadingTol == "Tolerant"){
+	abovecompetition_response = shadetolerant_response
+}*/ 
+if (ShadingTol == "Intolerant"){
+	abovecompetition_response = (shadetolerant_response + shadeintolerant_response)/2;
+}
+
+
+//Competition
+double competition_response = abovecompetition_response - (2*CompetBelow);
+if (competition_response < 0) {
+	competition_response = 0;
+}
+
+//-----------
+//salinity
+double Suog = 40;
+if (SaltTol == "High") {
+	Suog = 35; //35;
+} else if (SaltTol == "Mid") {
+	Suog = 32; //30;
+} else if (SaltTol == "Low") {
+	Suog = 29; //25;
+}
+
+double Sval = Salinity();
+double salinity_response = 0;
+
+if (Sval >= 0 & Sval < Suog){
+	salinity_response = 1;
+} else if (Sval >= Suog & Sval < Smax){
+	salinity_response = Math.exp(-Math.abs(Math.log(0.1))*(Sval-Suog)/(Smax-Suog));
+} else if (Sval >= Smax){
+	salinity_response = 0;
+}
+
+//-----------
+//Inundation Frequency
+double IFmax = 1;
+if (IntZone == "High") {
+	IFmax = 0.5;
+} else if (IntZone == "Mid") {
+	IFmax = 0.75;
+} else if (IntZone == "Low") {
+	IFmax = 1.0;
+}
+double InunCcons = 0.05;
+double IFslimit = IFmax - (Salinity()/(2*Smax));
+
+double IFval = InunFreq();
+double IF_response = 0.0;
+
+if (IFval >= 0 & IFval < (IFslimit - InunCcons)){
+	IF_response = 1;
+} else if (IFval >= (IFslimit - InunCcons) & IFval < IFslimit){
+	IF_response = Math.exp(-Math.abs(Math.log(0.01))*(IFval-IFslimit+InunCcons)/InunCcons);
+} else if (IFval >= IFslimit){
+	IF_response = 0;
+}
+
+//-----------
+f_red = competition_response*salinity_response*IF_response; 
+  }
+
+  
+double 
+ Salinity(  ) { 
+
+int c = (int) Math.floor(getX()/10); //10 px per cell
+int r = (int) Math.floor(getY()/10); //10 px per cell
+double salinity = main.Salinity[c][r];
+
+return salinity; 
+  }
+
+  
+double 
+ InunFreq(  ) { 
+
+int c = (int) Math.floor(getX()/10); //10 px per cell
+int r = (int) Math.floor(getY()/10); //10 px per cell
+double inunfreq = main.IF[c][r];
+
+return inunfreq; 
+  }
+
+  void Initializemangrove(  ) { 
+
+if (speciesnumber == 1) {
+	speciesname = "Avicennia marina";
+	hmaxcons = 1000;
+	dbhmaxcons = 40;
+	Agemax = 200;
+	b2cons = 43.15;
+	b3cons = 0.539375;
+	Gcons = 47.97761717; //95.95523434; //47.97761717;
+	WoodDens = 0.7316; 
+	ShadingTol = "Intolerant";
+	SaltTol = "High";
+	Smax = 85;
+	IntZone = "Low";
+	mangcrown.setFillColor(new Color(64, 64, 64, 170));
+	mangtrunk.setFillColor(darkGray);
+}
+else if (speciesnumber == 2) {
+	speciesname = "Avicennia officinalis";
+	hmaxcons = 1800;
+	dbhmaxcons = 100;
+	Agemax = 200;
+	b2cons = 33.26;
+	b3cons = 0.1663;
+	Gcons = 83.3389337;
+	WoodDens = 0.65; 
+	ShadingTol = "Intolerant";
+	SaltTol = "High";
+	Smax = 63;
+	IntZone = "Low";
+	mangcrown.setFillColor(new Color(128, 128, 128, 170));
+	mangtrunk.setFillColor(gray);
+}
+else if (speciesnumber == 3) {
+	speciesname = "Nypa fruticans";
+	hmaxcons = 1000;
+	dbhmaxcons = 45;
+	Agemax = 100;
+	b2cons = 38.35555556;
+	b3cons = 0.42617284;
+	Gcons = 96.74485126;
+	WoodDens = 0.6167; 
+	ShadingTol = "Tolerant";
+	SaltTol = "Low";
+	Smax = 33;
+	IntZone = "Low";
+	mangcrown.setFillColor(new Color(255, 0, 0, 170));
+	mangtrunk.setFillColor(red);
+}
+else if (speciesnumber == 4) {
+	speciesname = "Camptostemon philippinense";
+	hmaxcons = 1000;
+	dbhmaxcons = 60;
+	Agemax = 200;
+	b2cons = 28.76666667;
+	b3cons = 0.239722222;
+	Gcons = 49.30496116;
+	WoodDens = 0.4867; 
+	ShadingTol = "Tolerant";
+	SaltTol = "High";
+	Smax = 75;
+	IntZone = "High";
+	mangcrown.setFillColor(new Color(0, 128, 0, 170));
+	mangtrunk.setFillColor(green);
+}
+else if (speciesnumber == 5) {
+	speciesname = "Sonneratia alba";
+	hmaxcons = 1500;
+	dbhmaxcons = 70;
+	Agemax = 200;
+	b2cons = 38.94285714;
+	b3cons = 0.278163265;
+	Gcons = 70.00894019;
+	WoodDens = 0.6443; 
+	ShadingTol = "Intolerant";
+	SaltTol = "Mid";
+	Smax = 44;
+	IntZone = "Low";
+	mangcrown.setFillColor(new Color(255, 165, 0, 170));
+	mangtrunk.setFillColor(orange);
+}
+else if (speciesnumber == 6) {
+	speciesname = "Xylocarpus granatum";
+	hmaxcons = 2000;
+	dbhmaxcons = 80;
+	Agemax = 200;
+	b2cons = 46.575;
+	b3cons = 0.29109375;
+	Gcons = 90.70781672;
+	WoodDens = 0.6721; 
+	ShadingTol = "Tolerant";
+	SaltTol = "Low";
+	Smax = 34;
+	IntZone = "Mid";
+	mangcrown.setFillColor(new Color(128, 0, 128, 170));
+	mangtrunk.setFillColor(purple);
+}
+else if (speciesnumber == 7) {
+	speciesname = "Ceriops decandra";
+	hmaxcons = 500;
+	dbhmaxcons = 20;
+	Agemax = 150;
+	b2cons = 36.3;
+	b3cons = 0.9075;
+	Gcons = 34.38900705; //51.58351058;
+	WoodDens = 0.725; 
+	ShadingTol = "Tolerant";
+	SaltTol = "Low";
+	Smax = 67;
+	IntZone = "Mid";
+	mangcrown.setFillColor(new Color(255, 255, 0, 170));
+	mangtrunk.setFillColor(yellow);
+}
+else if (speciesnumber == 8) {
+	speciesname = "Bruguiera cylindrica";
+	hmaxcons = 1500;
+	dbhmaxcons = 45;
+	Agemax = 200;
+	b2cons = 60.57777778;
+	b3cons = 0.67308642;
+	Gcons = 68.47427699;
+	WoodDens = 0.81; 
+	ShadingTol = "Tolerant";
+	SaltTol = "Low";
+	Smax = 33;
+	IntZone = "Mid";
+	mangcrown.setFillColor(new Color(0, 0, 255, 170));
+	mangtrunk.setFillColor(blue);
+}
+else if (speciesnumber == 9) {
+	speciesname = "Avicennia rumphiana";
+	hmaxcons = 3000;
+	dbhmaxcons = 300;
+	Agemax = 200;
+	b2cons = 19.08666667;
+	b3cons = 0.031811111;
+	Gcons = 135.6491;
+	WoodDens = 0.7367; 
+	ShadingTol = "Intolerant";
+	SaltTol = "Mid";
+	Smax = 90;
+	IntZone = "High";
+	mangcrown.setFillColor(new Color(211, 211, 211, 170));
+	mangtrunk.setFillColor(lightGrey);
+}
+
+double Aved_dbh = dbhmaxcons/Agemax; 
+for (int i = 0; i < d_dbhlist.size(); i++){
+	d_dbhlist.set(i, Aved_dbh);
+}
+d_dbh = 0.75;
+height = 137 + (b2cons*dbh) - (b3cons*Math.pow(dbh,2)); //cm
+crown_radius = 22.2*Math.pow(dbh, 0.654); //cm
+crown_area = Math.PI*Math.pow(crown_radius,2)/10000; //m^2
+FON_radius = 1.5*22.2*Math.pow(dbh, 0.654); //cm
+trunk_radius = dbh/2; //cm
+no_of_offsprings = Math.floor(f_red*offspringdcons*crown_area);
+AGB = 0.251*Math.pow(dbh, 2.46); //t/ha
+
+mangtrunk.setRadius((trunk_radius/100)*20); //px //m
+mangtrunk.setZHeight((height/100)*20); //px //m
+mangcrown.setRadius((crown_radius/100)*20); //px //m
+mangcrown.setZHeight((crown_radius*4/100)*20); //px //m
+mangcrown.setZ(((height - (crown_radius*4))/100)*20); //px //m 
+  }
+
+  void Competitionbeta(  ) { 
+
+double competabove = 0.0; //for light availability
+double competbelow = 0.0; //for underground resources
+
+for (int degangle = 0; degangle < 360; degangle += 15){
+	double radangle = Math.toRadians(degangle); 
+	for (double distfromcenter = 1; distfromcenter <= (crown_radius*20/100); distfromcenter += 2){ //2 px = 0.1m = 10 cm
+		double x_field = getX() + distfromcenter*Math.cos(radangle);
+		double y_field = getY() + distfromcenter*Math.sin(radangle);	
+		
+		//nearest neighbor code for acquiring FON
+		double xcelldec = (x_field/4.0) - Math.floor(x_field/4.0);
+		double ycelldec = (y_field/4.0) - Math.floor(y_field/4.0);
+		
+		boolean acceptlowerx = true;
+		if (xcelldec >= 0.5 && xcelldec < 1){
+			acceptlowerx = false;
+		}
+		boolean acceptlowery = true;
+		if (ycelldec >= 0.5 && ycelldec < 1){
+			acceptlowery = false;
+		}
+
+		int xcell = (int)(Math.floor(x_field/4.0));
+		int ycell = (int)(Math.floor(y_field/4.0));
+		if (acceptlowerx == false){
+			xcell = (int)(Math.ceil(x_field/4.0));
+		}
+		if (acceptlowery == false){
+			ycell = (int)(Math.ceil(y_field/4.0));
+		}
+		
+		if (xcell >= 250){
+			xcell = 249;
+		}
+		if (ycell >= 250){
+			ycell = 249;
+		}
+		if (xcell < 0){
+			xcell = 0;
+		}
+		if (ycell < 0){
+			ycell = 0;
+		}
+		
+		double fieldabove = main.FONabove[xcell][ycell];		
+		double fieldbelow = main.FONbelow[xcell][ycell];
+		
+		/*
+		//
+		//Competition constants
+		double Imaxabove = 0.95;
+		double Iminabove = 0.07;
+		double Imaxbelow = 0.05;
+		double Iminbelow = 0.999;
+		//
+		
+		double selffieldabove = 0;
+		double selffieldbelow = 0;
+		if ((distfromcenter*100/20) < trunk_radius){//m
+			selffieldabove = Imaxabove;
+			selffieldbelow = Imaxbelow;
+		} else if ((distfromcenter*100/20) >= trunk_radius & (distfromcenter*100/20) <= crown_radius){ //m
+			selffieldabove = Imaxabove*Math.exp(-Math.abs(Math.log(Iminabove))*((distfromcenter*100/20)-trunk_radius)/(crown_radius-trunk_radius));
+			selffieldbelow = Imaxbelow*Math.exp(-Math.abs(Math.log(Iminbelow))*((distfromcenter*100/20)-trunk_radius)/(crown_radius-trunk_radius));
+		}
+		fieldabove = fieldabove - selffieldabove;
+		fieldbelow = fieldbelow - selffieldbelow;
+		if (fieldabove < 0){
+			fieldabove = 0;
+		} 
+		if (fieldbelow < 0){
+			fieldbelow = 0;
+		} 
+		//
+		*/
+		//
+		
+		double diff_area = 0.5*Math.toRadians(15)*(Math.pow(distfromcenter+1,2)-Math.pow(distfromcenter-1,2)); //differentialarea		
+		double diff_competabove = fieldabove*diff_area; //differential above competition
+		double diff_competbelow = fieldbelow*diff_area; //differential below competition
+		competabove = competabove + diff_competabove; 
+		competbelow = competbelow + diff_competbelow; 
+	}
+}
+
+/*
+//Competition constants
+double Imaxabove = 0.95;
+double Iminabove = 0.07;
+double Imaxbelow = 0.05;
+double Iminbelow = 0.999;
+double cabove = Math.abs(Math.log(Iminabove))/(crown_radius-trunk_radius);
+double cbelow = Math.abs(Math.log(Iminbelow))/(crown_radius-trunk_radius);
+//
+//double truecompetabove = competabove - (Imaxabove*Math.PI*Math.pow(trunk_radius,2)) - (Imaxabove*Math.PI* ( -Math.pow(trunk_radius,2) - (2*trunk_radius/cabove) + Math.pow(crown_radius,2) - (2/Math.pow(cabove,2)) ));
+//double truecompetbelow = competbelow - (Imaxbelow*Math.PI*Math.pow(trunk_radius,2)) - (Imaxbelow*Math.PI* ( -Math.pow(trunk_radius,2) - (2*trunk_radius/cbelow) + Math.pow(crown_radius,2) - (2/Math.pow(cbelow,2)) ));
+double competofselftrunkabove = Imaxabove*Math.PI*Math.pow(trunk_radius,2);
+double competofselftrunkbelow = Imaxbelow*Math.PI*Math.pow(trunk_radius,2);
+
+double competofselfcrownabove = Imaxabove * (
+								Math.PI*( (2*trunk_radius/cabove) + (2/Math.pow(cabove, 2)) ) + 
+								Math.PI * (Math.exp(-cabove*(crown_radius-trunk_radius))) *
+								( Math.pow(trunk_radius,2) + Math.pow(crown_radius,2) - (2*trunk_radius*crown_radius) + 
+								(crown_radius - trunk_radius) - (2*crown_radius/cabove) - (2/Math.pow(cabove, 2)) )
+								);
+double competofselfcrownbelow = Imaxbelow * (
+								Math.PI*( (2*trunk_radius/cbelow) + (2/Math.pow(cbelow, 2)) ) + 
+								Math.PI * (Math.exp(-cbelow*(crown_radius-trunk_radius))) *
+								( Math.pow(trunk_radius,2) + Math.pow(crown_radius,2) - (2*trunk_radius*crown_radius) + 
+								(crown_radius - trunk_radius) - (2*crown_radius/cbelow) - (2/Math.pow(cbelow, 2)) )
+								);
+
+double competofselfabove = competofselftrunkabove + competofselfcrownabove;
+double competofselfbelow = competofselftrunkbelow +  competofselfcrownbelow;
+
+CompetAbove = competabove/competofselfabove;
+CompetBelow = competbelow/competofselfbelow;
+*/
+
+
+CompetAbove = competabove/(Math.PI*Math.pow((crown_radius*20/100),2));
+CompetBelow = competbelow/(Math.PI*Math.pow((crown_radius*20/100),2));
+ 
+  }
+
+  
+boolean 
+ EstablishmentBool( double XSapling, double YSapling ) { 
+
+double xcelldec = (XSapling/4.0) - Math.floor(XSapling/4.0);
+double ycelldec = (YSapling/4.0) - Math.floor(YSapling/4.0);
+
+boolean acceptlowerx = true;
+if (xcelldec >= 0.5 && xcelldec < 1){
+	acceptlowerx = false;
+}
+boolean acceptlowery = true;
+if (ycelldec >= 0.5 && ycelldec < 1){
+	acceptlowery = false;
+}
+
+int xcell = (int)(Math.floor(XSapling/4.0));
+int ycell = (int)(Math.floor(YSapling/4.0));
+if (acceptlowerx == false){
+	xcell = (int)(Math.ceil(XSapling/4.0));
+}
+if (acceptlowery == false){
+	ycell = (int)(Math.ceil(YSapling/4.0));
+}
+
+if (xcell >= 250){
+	xcell = 249;
+}
+if (ycell >= 250){
+	ycell = 249;
+}
+if (xcell < 0){
+	xcell = 0;
+}
+if (ycell < 0){
+	ycell = 0;
+}
+
+double fieldabove = main.FONabove[xcell][ycell];		
+double fieldbelow = main.FONbelow[xcell][ycell];
+double totalfield = fieldabove + fieldbelow;
+double EstablishProb = 1 - (2*totalfield);
+if (EstablishProb < 0){
+	EstablishProb = 0;
+}
+boolean IfEstablished = false;
+if (Math.random() >= 1.0 - EstablishProb){
+	IfEstablished = true;
+}
+
+return IfEstablished; 
+  }
+
+  void Competition(  ) { 
+
+double sumFONabove = 0; //for light availbility
+double sumFONbelow = 0; //for underground resources availability
+
+for (Mangrove mang: filter(main.mangroves, m -> m.distanceTo(getX(), getY())*100/20 < m.FON_radius + FON_radius)){ //convert px to cm
+	double distmangs = mang.distanceTo(getX(), getY())*100/20; //cm
+	if (distmangs == 0){
+		continue;
+	}
+	double ntrunk = mang.trunk_radius; //cm //neighbour
+	double nFON = mang.FON_radius; //cm //neighbour 
+	double kFON = FON_radius; //cm //self 
+	double roverlap = kFON - distmangs; //cm
+	
+	double centerdiststart = 5;
+	if (roverlap < 0){
+		centerdiststart = 5-roverlap;
+	}
+	double centerdistend = nFON;
+	if (nFON > distmangs + kFON){
+		centerdistend = distmangs + kFON;
+	}
+	
+	for (double centerdist = centerdiststart; centerdist <= centerdistend; centerdist += 10){ //10 cm increment
+		double FONabove = ComputeFONabove(centerdist, ntrunk, nFON);
+		double FONbelow = ComputeFONbelow(centerdist, ntrunk, nFON);
+		double FONabovearc = 0;
+		double FONbelowarc = 0;
+		if (Math.abs(roverlap) >= centerdist) {
+			FONabovearc = FONabove*Math.PI*(Math.pow(centerdist+5,2)-Math.pow(centerdist-5,2)); //differentialarea
+			FONbelowarc = FONbelow*Math.PI*(Math.pow(centerdist+5,2)-Math.pow(centerdist-5,2)); //differentialarea
+		} else if (Math.abs(roverlap) < centerdist) {
+			double anglephi =  Math.acos((Math.pow(distmangs,2)+Math.pow(centerdist,2)-Math.pow(kFON,2))/(2*distmangs*centerdist)); //in radians
+			FONabovearc = FONabove*0.5*2*anglephi*(Math.pow(centerdist+5,2)-Math.pow(centerdist-5,2)); //differentialarea
+			FONbelowarc = FONbelow*0.5*2*anglephi*(Math.pow(centerdist+5,2)-Math.pow(centerdist-5,2)); //differentialarea
+		}
+		sumFONabove = sumFONabove + FONabovearc;
+		sumFONbelow = sumFONbelow + FONbelowarc;	
+	}
+}
+
+CompetAbove = sumFONabove/(Math.PI*Math.pow(FON_radius,2));
+CompetBelow = sumFONbelow/(Math.PI*Math.pow(FON_radius,2)); 
+  }
+
+  
+double 
+ ComputeFONabove( double centerdist, double mangtrunk, double mangFON ) { 
+
+// arguments must be in cm
+// above values
+double Imax = 0.95;
+double Imin = 0.07;
+
+double FONabove = 0;
+
+if (centerdist >= 0 & centerdist < mangtrunk){ //cm
+	FONabove = Imax;
+} else if (centerdist >= mangtrunk & centerdist <= mangFON){ //cm
+	FONabove = Imax*Math.exp(-Math.abs(Math.log(Imin))*(centerdist-mangtrunk)/(mangFON-mangtrunk));
+} else if (centerdist > mangFON){ //cm
+	FONabove = 0;
+}
+
+return FONabove; 
+  }
+
+  
+double 
+ ComputeFONbelow( double centerdist, double mangtrunk, double mangFON ) { 
+
+// arguments must be in cm
+// above values
+double Imax = 0.05;
+double Imin = 0.999;
+
+double FONbelow = 0;
+
+if (centerdist >= 0 & centerdist < mangtrunk){ //cm
+	FONbelow = Imax;
+} else if (centerdist >= mangtrunk & centerdist <= mangFON){ //cm
+	FONbelow = Imax*Math.exp(-Math.abs(Math.log(Imin))*(centerdist-mangtrunk)/(mangFON-mangtrunk));
+} else if (centerdist > mangFON){ //cm
+	FONbelow = 0;
+}
+
+return FONbelow; 
+  }
+  // Custom Distributions
+  @AnyLogicInternalCodegenAPI
+  private final static double[] _SeedlingDistDispersion_Arguments_xjal = _SeedlingDistDispersion_Arguments_xjal();
+  @AnyLogicInternalCodegenAPI
+  private final static double[] _SeedlingDistDispersion_Arguments_xjal() {
+    return new double[] { 0.0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0, 3.2, 3.4, 3.6, 3.8, 4.0, 4.2, 4.4, 4.6, 4.8, 5.0, 5.2, 5.4, 5.6, 5.8, 6.0, 6.2, 6.4, 6.6, 6.8, 7.0, 7.2, 7.4, 7.6, 7.8, 8.0, 8.2, 8.4, 8.6, 8.8, 9.0, 9.2, 9.4, 9.6, 9.8, 10.0, 10.2, 10.4, 10.6, 10.8, 11.0, 11.2, 11.4, 11.6, 11.8, 12.0, 12.2, 12.4, 12.6, 12.8, 13.0, 13.2, 13.4, 13.6, 13.8, 14.0, 14.2, 14.4, 14.6, 14.8, 15.0, 15.2, 15.4, 15.6, 15.8, 16.0, 16.2, 16.4, 16.6, 16.8, 17.0, 17.2, 17.4, 17.6, 17.8, 18.0, 18.2, 18.4, 18.6, 18.8, 19.0, 19.2, 19.4, 19.6, 19.8, 20.0, 20.2, 20.4, 20.6, 20.8, 21.0, 21.2, 21.4, 21.6, 21.8, 22.0, 22.2, 22.4, 22.6, 22.8, 23.0, 23.2, 23.4, 23.6, 23.8, 24.0, 24.2, 24.4, 24.6, 24.8, 25.0, 25.2, 25.4, 25.6, 25.8, 26.0, 26.2, 26.4, 26.6, 26.8, 27.0, 27.2, 27.4, 27.6, 27.8, 28.0, 28.2, 28.4, 28.6, 28.8, 29.0, 29.2, 29.4, 29.6, 29.8, 30.0, 30.2, 30.4, 30.6, 30.8, 31.0, 31.2, 31.4, 31.6, 31.8, 32.0, 32.2, 32.4, 32.6, 32.8, 33.0, 33.2, 33.4, 33.6, 33.8, 34.0, 34.2, 34.4, 34.6, 34.8, 35.0, 35.2, 35.4, 35.6, 35.8, 36.0, 36.2, 36.4, 36.6, 36.8, 37.0, 37.2, 37.4, 37.6, 37.8, 38.0, 38.2, 38.4, 38.6, 38.8, 39.0, 39.2, 39.4, 39.6, 39.8, 40.0, 40.2, 40.4, 40.6, 40.8, 41.0, 41.2, 41.4, 41.6, 41.8, 42.0, 42.2, 42.4, 42.6, 42.8, 43.0, 43.2, 43.4, 43.6, 43.8, 44.0, 44.2, 44.4, 44.6, 44.8, 45.0, 45.2, 45.4, 45.6, 45.8, 46.0, 46.2, 46.4, 46.6, 46.8, 47.0, 47.2, 47.4, 47.6, 47.8, 48.0, 48.2, 48.4, 48.6, 48.8, 49.0, 49.2, 49.4, 49.6, 49.8, 50.0,  };
+  }
+  @AnyLogicInternalCodegenAPI
+  private final static double[] _SeedlingDistDispersion_Values_xjal = _SeedlingDistDispersion_Values_xjal();
+  @AnyLogicInternalCodegenAPI
+  private final static double[] _SeedlingDistDispersion_Values_xjal() {
+    return new double[] { 0.1006783655, 0.0986848003, 0.0967307103, 0.0948153139, 0.0929378449, 0.0910975523, 0.0892936999, 0.0875255662, 0.0857924438, 0.0840936396, 0.082428474, 0.0807962809, 0.0791964073, 0.0776282134, 0.0760910718, 0.0745843676, 0.0731074982, 0.0716598727, 0.0702409122, 0.0688500489, 0.0674867266, 0.0661503999, 0.0648405342, 0.0635566056, 0.0622981005, 0.0610645154, 0.059855357, 0.0586701415, 0.0575083949, 0.0563696524, 0.0552534585, 0.0541593667, 0.0530869394, 0.0520357476, 0.0510053707, 0.0499953967, 0.0490054215, 0.0480350492, 0.0470838915, 0.0461515679, 0.0452377057, 0.0443419391, 0.0434639099, 0.0426032668, 0.0417596656, 0.0409327688, 0.0401222457, 0.039327772, 0.0385490299, 0.037785708, 0.0370375008, 0.0363041092, 0.0355852397, 0.0348806047, 0.0341899224, 0.0335129166, 0.0328493164, 0.0321988564, 0.0315612763, 0.0309363212, 0.030323741, 0.0297232906, 0.0291347301, 0.0285578238, 0.027992341, 0.0274380555, 0.0268947456, 0.0263621939, 0.0258401875, 0.0253285175, 0.0248269793, 0.0243353721, 0.0238534995, 0.0233811685, 0.0229181904, 0.0224643798, 0.0220195553, 0.0215835389, 0.0211561562, 0.0207372362, 0.0203266114, 0.0199241176, 0.0195295936, 0.0191428817, 0.0187638273, 0.0183922786, 0.0180280871, 0.017671107, 0.0173211957, 0.016978213, 0.0166420219, 0.0163124878, 0.0159894789, 0.015672866, 0.0153625224, 0.0150583241, 0.0147601493, 0.0144678788, 0.0141813956, 0.0139005851, 0.0136253351, 0.0133555354, 0.0130910781, 0.0128318574, 0.0125777696, 0.012328713, 0.0120845882, 0.0118452973, 0.0116107447, 0.0113808365, 0.0111554809, 0.0109345876, 0.0107180682, 0.0105058362, 0.0102978067, 0.0100938965, 0.009894024, 0.0096981092, 0.0095060737, 0.0093178409, 0.0091333353, 0.0089524831, 0.0087752121, 0.0086014512, 0.0084311311, 0.0082641835, 0.0081005417, 0.0079401402, 0.0077829149, 0.0076288029, 0.0074777425, 0.0073296732, 0.007184536, 0.0070422726, 0.0069028263, 0.0067661412, 0.0066321626, 0.006500837, 0.0063721118, 0.0062459355, 0.0061222577, 0.0060010289, 0.0058822006, 0.0057657252, 0.0056515562, 0.0055396479, 0.0054299555, 0.0053224352, 0.0052170439, 0.0051137395, 0.0050124807, 0.0049132269, 0.0048159385, 0.0047205765, 0.0046271028, 0.0045354801, 0.0044456715, 0.0043576413, 0.0042713543, 0.0041867758, 0.0041038721, 0.00402261, 0.0039429569, 0.0038648812, 0.0037883514, 0.003713337, 0.003639808, 0.003567735, 0.0034970891, 0.0034278421, 0.0033599663, 0.0032934345, 0.0032282201, 0.0031642971, 0.0031016398, 0.0030402232, 0.0029800228, 0.0029210143, 0.0028631744, 0.0028064797, 0.0027509077, 0.0026964361, 0.0026430431, 0.0025907073, 0.0025394079, 0.0024891242, 0.0024398363, 0.0023915243, 0.0023441689, 0.0022977513, 0.0022522527, 0.0022076552, 0.0021639407, 0.0021210918, 0.0020790913, 0.0020379226, 0.001997569, 0.0019580145, 0.0019192432, 0.0018812396, 0.0018439886, 0.0018074752, 0.0017716848, 0.0017366031, 0.001702216, 0.0016685099, 0.0016354712, 0.0016030867, 0.0015713434, 0.0015402287, 0.0015097302, 0.0014798355, 0.0014505328, 0.0014218103, 0.0013936566, 0.0013660603, 0.0013390105, 0.0013124964, 0.0012865072, 0.0012610326, 0.0012360625, 0.0012115868, 0.0011875958, 0.0011640798, 0.0011410295, 0.0011184356, 0.0010962891, 0.0010745811, 0.001053303, 0.0010324462, 0.0010120024, 9.919634E-4, 9.723212E-4, 9.53068E-4, 9.34196E-4, 9.156976E-4, 8.975656E-4, 8.797926E-4, 8.623716E-4, 8.452955E-4, 8.285575E-4, 8.121509E-4, 7.960693E-4, 7.80306E-4, 7.64855E-4, 7.497098E-4, 7.348646E-4, 7.203133E-4, 7.060501E-4, 6.920694E-4, 6.783655E-4,  };
+  }
+
+  /**
+   * SeedlingDistDispersion Custom Distribution
+   */
+  public CustomDistribution SeedlingDistDispersion = new CustomDistribution( _SeedlingDistDispersion_Arguments_xjal, _SeedlingDistDispersion_Values_xjal, CUSTOM_DISTRIBUTION_INTERPOLATION_LINEAR, this );
+
+  public double SeedlingDistDispersion() { return SeedlingDistDispersion.get(); }
+
+  // View areas
+  public ViewArea _origin_VA = new ViewArea( this, "[Origin]", 0, 0, 1140.0, 1140.0 );
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public int getViewAreas(Map<String, ViewArea> _output) {
+    if ( _output != null ) {
+      _output.put( "_origin_VA", this._origin_VA );
+    }
+    return 1 + super.getViewAreas( _output );
+  }
+  protected static final Color _mangcrown_Fill_Color = new Color( 0xAA008000, true );
+  @AnyLogicInternalCodegenAPI
+  protected static final int _mangtrunk = 1;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _mangcrown = 2;
+
+  /** Internal constant, shouldn't be accessed by user */
+  @AnyLogicInternalCodegenAPI
+  protected static final int _SHAPE_NEXT_ID_xjal = 3;
+
+  @AnyLogicInternalCodegenAPI
+  public boolean isPublicPresentationDefined() {
+    return true;
+  }
+
+  @AnyLogicInternalCodegenAPI
+  public boolean isEmbeddedAgentPresentationVisible( Agent _a ) {
+    return super.isEmbeddedAgentPresentationVisible( _a );
+  }
+
+  
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private void _mangtrunk_SetDynamicParams_xjal( ShapeOval shape ) {
+    shape.setRadius(
+(trunk_radius/100)*20 //px //m 
+);
+    shape.setZHeight(
+(height/100)*20 //px //m 
+);
+  }
+  
+  protected ShapeOval mangtrunk;
+  
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private void _mangcrown_SetDynamicParams_xjal( ShapeOval shape ) {
+    shape.setZ(
+((height - (crown_radius*2))/100)*20 //px //m 
+);
+    shape.setRadius(
+(crown_radius/100)*20 //px //m 
+);
+    shape.setZHeight(
+(crown_radius*2/100)*20 //px //m 
+);
+  }
+  
+  protected ShapeOval mangcrown;
+  @AnyLogicInternalCodegenAPI
+  private void _createPersistentElementsBP0_xjal() {
+    mangtrunk = new ShapeOval(
+       SHAPE_DRAW_2D3D, true,0.0, 0.0, 0.0, 0.0, 
+       null, green,
+	   5.0, 5.0, 10.0, 1.0, LINE_STYLE_SOLID ) {
+      @Override
+      public void updateDynamicProperties() {
+        _mangtrunk_SetDynamicParams_xjal( this );
+        super.updateDynamicProperties();
+      }
+    };
+
+    mangcrown = new ShapeOval(
+       SHAPE_DRAW_2D3D, true,0.0, 0.0, 0.0, 0.0, 
+       null, _mangcrown_Fill_Color,
+	   10.0, 10.0, 10.0, 1.0, LINE_STYLE_SOLID ) {
+      @Override
+      public void updateDynamicProperties() {
+        _mangcrown_SetDynamicParams_xjal( this );
+        super.updateDynamicProperties();
+      }
+    };
+
+  }
+
+  @AnyLogicInternalCodegenAPI
+  private void _createPersistentElementsAP0_xjal() {
+  }
+
+  @AnyLogicInternalCodegenAPI
+  private void _createPersistentElementsBS0_xjal() {
+  }
+
+
+  // Static initialization of persistent elements
+  {
+    _createPersistentElementsBP0_xjal();
+  }
+  protected ShapeTopLevelPresentationGroup presentation;
+  protected ShapeModelElementsGroup icon; 
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public ShapeTopLevelPresentationGroup getPresentationShape() {
+    return presentation;
+  }
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public ShapeModelElementsGroup getModelElementsShape() {
+    return icon;
+  }
+
+  /**
+   * Constructor
+   */
+  public Mangrove( Engine engine, Agent owner, AgentList<? extends Mangrove> ownerPopulation ) {
+    super( engine, owner, ownerPopulation );
+    instantiateBaseStructureThis_xjal();
+  }
+
+  @AnyLogicInternalCodegenAPI
+  public void onOwnerChanged_xjal() {
+    super.onOwnerChanged_xjal();
+    setupReferences_xjal();
+  }
+
+  @AnyLogicInternalCodegenAPI
+  public void instantiateBaseStructure_xjal() {
+    super.instantiateBaseStructure_xjal();
+    instantiateBaseStructureThis_xjal();
+  }
+  
+  @AnyLogicInternalCodegenAPI
+  private void instantiateBaseStructureThis_xjal() {
+    setupReferences_xjal();
+  }
+  
+  @AnyLogicInternalCodegenAPI
+  private void setupReferences_xjal() {
+    main = get_Main();
+  }
+  
+  /**
+   * Simple constructor. Please add created agent to some population by calling goToPopulation() function
+   */
+  public Mangrove() {
+  }
+  
+  /**
+   * Simple constructor. Please add created agent to some population by calling goToPopulation() function
+   */
+  public Mangrove( double offspringdcons, double hmaxcons, double dbhmaxcons, double b2cons, double Gcons, double b3cons, int speciesnumber, String speciesname, double Smax, double WoodDens, String SaltTol, String ShadingTol, double Agemax, String IntZone ) {
+    markParametersAreSet();
+    this.offspringdcons = offspringdcons;
+    this.hmaxcons = hmaxcons;
+    this.dbhmaxcons = dbhmaxcons;
+    this.b2cons = b2cons;
+    this.Gcons = Gcons;
+    this.b3cons = b3cons;
+    this.speciesnumber = speciesnumber;
+    this.speciesname = speciesname;
+    this.Smax = Smax;
+    this.WoodDens = WoodDens;
+    this.SaltTol = SaltTol;
+    this.ShadingTol = ShadingTol;
+    this.Agemax = Agemax;
+    this.IntZone = IntZone;
+  }
+  
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public void doCreate() {
+    super.doCreate();
+    // Assigning initial values for plain variables
+    setupPlainVariables_Mangrove_xjal();
+    // Dynamic initialization of persistent elements
+    _createPersistentElementsAP0_xjal();
+    presentation = new ShapeTopLevelPresentationGroup( Mangrove.this, true, 0, 0, 0, 0 , mangtrunk, mangcrown );
+    addAll( d_dbhlist, new Double[] 
+{0.75, 0.75, 0.75, 0.75, 0.75} 
+    );
+    icon = new ShapeModelElementsGroup( Mangrove.this, getElementProperty( "mangrove_dynamics.Mangrove.icon", IElementDescriptor.MODEL_ELEMENT_DESCRIPTORS )  );
+    icon.setIconOffsets( 0.0, 0.0 );
+	 // Port connectors with non-replicated objects
+    // Creating replicated embedded objects
+    setupInitialConditions_xjal( Mangrove.class );
+    // Dynamic initialization of persistent elements
+    _createPersistentElementsBS0_xjal();
+  }
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public void doStart() {
+    super.doStart();
+    Alive.start();
+  }
+ 
+
+  /**
+   * Assigning initial values for plain variables<br>
+   * <em>This method isn't designed to be called by user and may be removed in future releases.</em>
+   */
+  @AnyLogicInternalCodegenAPI
+  public void setupPlainVariables_xjal() {
+    setupPlainVariables_Mangrove_xjal();
+  }
+
+  /**
+   * Assigning initial values for plain variables<br>
+   * <em>This method isn't designed to be called by user and may be removed in future releases.</em>
+   */
+  @AnyLogicInternalCodegenAPI
+  private void setupPlainVariables_Mangrove_xjal() {
+    f_red = 
+1 
+;
+  }
+
+  // User API -----------------------------------------------------
+  public Main get_Main() {
+    {
+      Agent owner = getOwner();
+      if ( owner instanceof Main ) return (Main) owner;
+    }
+    return null;
+  }
+
+  /**
+   * Read-only variable. <em>Shouldn't be modified by user.</em>
+   */
+  @AnyLogicCustomSerialization(AnyLogicCustomSerializationMode.REFERENCE)
+  public transient mangrove_dynamics.Main main;
+
+  @AnyLogicInternalCodegenAPI
+  public static LinkToAgentAnimationSettings _connections_commonAnimationSettings_xjal = new LinkToAgentAnimationSettingsImpl( false, black, 1.0, LINE_STYLE_SOLID, ARROW_NONE, 0.0 );
+
+  public LinkToAgentCollection<Agent, Agent> connections = new LinkToAgentStandardImpl<Agent, Agent>(this, _connections_commonAnimationSettings_xjal);
+  @Override
+  public LinkToAgentCollection<? extends Agent, ? extends Agent> getLinkToAgentStandard_xjal() {
+    return connections;
+  }
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public void onReceive( Object _msg_xjal, Agent _sender_xjal ) {
+    super.onReceive( _msg_xjal, _sender_xjal );
+    Alive.fireEvent( _msg_xjal );
+  }
+
+
+
+  @AnyLogicInternalCodegenAPI
+  public void drawLinksToAgents(boolean _underAgents_xjal, LinkToAgentAnimator _animator_xjal) {
+    super.drawLinksToAgents(_underAgents_xjal, _animator_xjal);
+    if ( _underAgents_xjal ) {
+      _animator_xjal.drawLink( this, connections, true, true );
+    }
+  }
+
+  public AgentList<? extends Mangrove> getPopulation() {
+    return (AgentList<? extends Mangrove>) super.getPopulation();
+  }
+
+  public List<? extends Mangrove> agentsInRange( double distance ) {
+    return (List<? extends Mangrove>) super.agentsInRange( distance );
+  }
+
+  // Reaction on changes -------------------------------------
+  public void onChange() {
+    super.onChange();
+    Alive.onChange();
+  }
+
+  @AnyLogicInternalCodegenAPI
+  public void onDestroy() {
+    Alive.onDestroy();
+    super.onDestroy();
+  }
+
+
+
+}
