@@ -1,0 +1,3561 @@
+package mangrove_dynamics;
+
+import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Currency;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Locale;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Random;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.Stack;
+import java.util.Timer;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.Vector;
+import java.awt.Color;
+import java.awt.Font;
+import com.anylogic.engine.connectivity.ResultSet;
+import com.anylogic.engine.connectivity.Statement;
+import com.anylogic.engine.elements.*;
+import com.anylogic.engine.markup.Network;
+import com.anylogic.engine.Position;
+import com.anylogic.engine.markup.PedFlowStatistics;
+import com.anylogic.engine.markup.DensityMap;
+
+
+import static java.lang.Math.*;
+import static com.anylogic.engine.UtilitiesArray.*;
+import static com.anylogic.engine.UtilitiesCollection.*;
+import static com.anylogic.engine.presentation.UtilitiesColor.*;
+import static com.anylogic.engine.HyperArray.*;
+
+import com.anylogic.engine.*;
+import com.anylogic.engine.analysis.*;
+import com.anylogic.engine.connectivity.*;
+import com.anylogic.engine.database.*;
+import com.anylogic.engine.gis.*;
+import com.anylogic.engine.markup.*;
+import com.anylogic.engine.routing.*;
+import com.anylogic.engine.presentation.*;
+import com.anylogic.engine.gui.*;
+
+import java.awt.geom.Arc2D;
+
+import java.awt.image.BufferedImage;
+
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.geometry.Point2D;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseButton;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+
+import java.io.ObjectInputStream;
+import java.io.FileInputStream;
+import java.sql.*;
+
+import com.esri.arcgisruntime.data.ServiceFeatureTable;
+import com.esri.arcgisruntime.layers.FeatureLayer;
+import com.esri.arcgisruntime.loadable.LoadStatus;
+import com.esri.arcgisruntime.mapping.ArcGISMap;
+import com.esri.arcgisruntime.mapping.Basemap;
+import com.esri.arcgisruntime.mapping.view.MapView;
+
+import java.lang.Iterable;
+import java.util.Collection;
+import java.util.List; 
+
+public class Main extends Agent
+{
+  // Excel Files
+  public ExcelFile salinityASCII = new ExcelFile( Main.this, "/mangrove_dynamics/", "database/Salinityexcel.xlsx", false );
+  public ExcelFile IFASCII = new ExcelFile( Main.this, "/mangrove_dynamics/", "database/IFexcel.xlsx", false );
+
+  // Parameters
+
+  public 
+int  NumberOfMangroves;
+
+  /**
+   * Returns default value for parameter <code>NumberOfMangroves</code>.
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  public int _NumberOfMangroves_DefaultValue_xjal() {
+    final Main self = this;
+    return 
+51 
+;
+  }
+
+  public void set_NumberOfMangroves( int NumberOfMangroves ) {
+    if (NumberOfMangroves == this.NumberOfMangroves) {
+      return;
+    }
+    int _oldValue_xjal = this.NumberOfMangroves;
+    this.NumberOfMangroves = NumberOfMangroves;
+    onChange_NumberOfMangroves_xjal( _oldValue_xjal );
+    onChange();
+  }
+
+  /**
+   * Calls "On change" action for parameter NumberOfMangroves.<br>
+   * Note that 'oldValue' in that action will be unavailable if this method is called by user
+   * (current parameter value will be passed as 'oldValue').<br>
+   * Please call <code>set_NumberOfMangroves()</code> method instead.
+   */
+  protected void onChange_NumberOfMangroves() {
+    onChange_NumberOfMangroves_xjal( NumberOfMangroves );
+  }
+
+  @AnyLogicInternalCodegenAPI
+  protected void onChange_NumberOfMangroves_xjal( int oldValue ) {  
+  }
+
+
+  public 
+int  Toprow;
+
+  /**
+   * Returns default value for parameter <code>Toprow</code>.
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  public int _Toprow_DefaultValue_xjal() {
+    final Main self = this;
+    return 
+1 
+;
+  }
+
+  public void set_Toprow( int Toprow ) {
+    if (Toprow == this.Toprow) {
+      return;
+    }
+    int _oldValue_xjal = this.Toprow;
+    this.Toprow = Toprow;
+    onChange_Toprow_xjal( _oldValue_xjal );
+    onChange();
+  }
+
+  /**
+   * Calls "On change" action for parameter Toprow.<br>
+   * Note that 'oldValue' in that action will be unavailable if this method is called by user
+   * (current parameter value will be passed as 'oldValue').<br>
+   * Please call <code>set_Toprow()</code> method instead.
+   */
+  protected void onChange_Toprow() {
+    onChange_Toprow_xjal( Toprow );
+  }
+
+  @AnyLogicInternalCodegenAPI
+  protected void onChange_Toprow_xjal( int oldValue ) {  
+  }
+
+
+  public 
+int  Leftcol;
+
+  /**
+   * Returns default value for parameter <code>Leftcol</code>.
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  public int _Leftcol_DefaultValue_xjal() {
+    final Main self = this;
+    return 
+1 
+;
+  }
+
+  public void set_Leftcol( int Leftcol ) {
+    if (Leftcol == this.Leftcol) {
+      return;
+    }
+    int _oldValue_xjal = this.Leftcol;
+    this.Leftcol = Leftcol;
+    onChange_Leftcol_xjal( _oldValue_xjal );
+    onChange();
+  }
+
+  /**
+   * Calls "On change" action for parameter Leftcol.<br>
+   * Note that 'oldValue' in that action will be unavailable if this method is called by user
+   * (current parameter value will be passed as 'oldValue').<br>
+   * Please call <code>set_Leftcol()</code> method instead.
+   */
+  protected void onChange_Leftcol() {
+    onChange_Leftcol_xjal( Leftcol );
+  }
+
+  @AnyLogicInternalCodegenAPI
+  protected void onChange_Leftcol_xjal( int oldValue ) {  
+  }
+
+
+  public 
+double  SimExperimentNum;
+
+  /**
+   * Returns default value for parameter <code>SimExperimentNum</code>.
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  public double _SimExperimentNum_DefaultValue_xjal() {
+    final Main self = this;
+    return 
+1 
+;
+  }
+
+  public void set_SimExperimentNum( double SimExperimentNum ) {
+    if (SimExperimentNum == this.SimExperimentNum) {
+      return;
+    }
+    double _oldValue_xjal = this.SimExperimentNum;
+    this.SimExperimentNum = SimExperimentNum;
+    onChange_SimExperimentNum_xjal( _oldValue_xjal );
+    onChange();
+  }
+
+  /**
+   * Calls "On change" action for parameter SimExperimentNum.<br>
+   * Note that 'oldValue' in that action will be unavailable if this method is called by user
+   * (current parameter value will be passed as 'oldValue').<br>
+   * Please call <code>set_SimExperimentNum()</code> method instead.
+   */
+  protected void onChange_SimExperimentNum() {
+    onChange_SimExperimentNum_xjal( SimExperimentNum );
+  }
+
+  @AnyLogicInternalCodegenAPI
+  protected void onChange_SimExperimentNum_xjal( double oldValue ) {  
+  }
+
+
+  public 
+double  SalinityValue;
+
+  /**
+   * Returns default value for parameter <code>SalinityValue</code>.
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  public double _SalinityValue_DefaultValue_xjal() {
+    final Main self = this;
+    return 
+24 
+;
+  }
+
+  public void set_SalinityValue( double SalinityValue ) {
+    if (SalinityValue == this.SalinityValue) {
+      return;
+    }
+    double _oldValue_xjal = this.SalinityValue;
+    this.SalinityValue = SalinityValue;
+    onChange_SalinityValue_xjal( _oldValue_xjal );
+    onChange();
+  }
+
+  /**
+   * Calls "On change" action for parameter SalinityValue.<br>
+   * Note that 'oldValue' in that action will be unavailable if this method is called by user
+   * (current parameter value will be passed as 'oldValue').<br>
+   * Please call <code>set_SalinityValue()</code> method instead.
+   */
+  protected void onChange_SalinityValue() {
+    onChange_SalinityValue_xjal( SalinityValue );
+  }
+
+  @AnyLogicInternalCodegenAPI
+  protected void onChange_SalinityValue_xjal( double oldValue ) {  
+  }
+
+
+  public 
+double  IFValue;
+
+  /**
+   * Returns default value for parameter <code>IFValue</code>.
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  public double _IFValue_DefaultValue_xjal() {
+    final Main self = this;
+    return 
+0.5 
+;
+  }
+
+  public void set_IFValue( double IFValue ) {
+    if (IFValue == this.IFValue) {
+      return;
+    }
+    double _oldValue_xjal = this.IFValue;
+    this.IFValue = IFValue;
+    onChange_IFValue_xjal( _oldValue_xjal );
+    onChange();
+  }
+
+  /**
+   * Calls "On change" action for parameter IFValue.<br>
+   * Note that 'oldValue' in that action will be unavailable if this method is called by user
+   * (current parameter value will be passed as 'oldValue').<br>
+   * Please call <code>set_IFValue()</code> method instead.
+   */
+  protected void onChange_IFValue() {
+    onChange_IFValue_xjal( IFValue );
+  }
+
+  @AnyLogicInternalCodegenAPI
+  protected void onChange_IFValue_xjal( double oldValue ) {  
+  }
+
+
+  @Override
+  public void setParametersToDefaultValues() {
+    super.setParametersToDefaultValues();
+    NumberOfMangroves = _NumberOfMangroves_DefaultValue_xjal();
+    Toprow = _Toprow_DefaultValue_xjal();
+    Leftcol = _Leftcol_DefaultValue_xjal();
+    SimExperimentNum = _SimExperimentNum_DefaultValue_xjal();
+    SalinityValue = _SalinityValue_DefaultValue_xjal();
+    IFValue = _IFValue_DefaultValue_xjal();
+  }
+
+  @Override
+  public boolean setParameter(String _name_xjal, Object _value_xjal, boolean _callOnChange_xjal) {
+    switch ( _name_xjal ) {
+    case "NumberOfMangroves":
+      if ( _callOnChange_xjal ) {
+        set_NumberOfMangroves( ((Number) _value_xjal).intValue() );
+      } else {
+        NumberOfMangroves = ((Number) _value_xjal).intValue();
+      }
+      return true;
+    case "Toprow":
+      if ( _callOnChange_xjal ) {
+        set_Toprow( ((Number) _value_xjal).intValue() );
+      } else {
+        Toprow = ((Number) _value_xjal).intValue();
+      }
+      return true;
+    case "Leftcol":
+      if ( _callOnChange_xjal ) {
+        set_Leftcol( ((Number) _value_xjal).intValue() );
+      } else {
+        Leftcol = ((Number) _value_xjal).intValue();
+      }
+      return true;
+    case "SimExperimentNum":
+      if ( _callOnChange_xjal ) {
+        set_SimExperimentNum( ((Number) _value_xjal).doubleValue() );
+      } else {
+        SimExperimentNum = ((Number) _value_xjal).doubleValue();
+      }
+      return true;
+    case "SalinityValue":
+      if ( _callOnChange_xjal ) {
+        set_SalinityValue( ((Number) _value_xjal).doubleValue() );
+      } else {
+        SalinityValue = ((Number) _value_xjal).doubleValue();
+      }
+      return true;
+    case "IFValue":
+      if ( _callOnChange_xjal ) {
+        set_IFValue( ((Number) _value_xjal).doubleValue() );
+      } else {
+        IFValue = ((Number) _value_xjal).doubleValue();
+      }
+      return true;
+    default:
+      return super.setParameter( _name_xjal, _value_xjal, _callOnChange_xjal );
+    }
+  }
+
+  @Override
+  public <T> T getParameter(String _name_xjal) {
+    Object _result_xjal;
+    switch ( _name_xjal ) {
+    case "NumberOfMangroves": _result_xjal = NumberOfMangroves; break;
+    case "Toprow": _result_xjal = Toprow; break;
+    case "Leftcol": _result_xjal = Leftcol; break;
+    case "SimExperimentNum": _result_xjal = SimExperimentNum; break;
+    case "SalinityValue": _result_xjal = SalinityValue; break;
+    case "IFValue": _result_xjal = IFValue; break;
+    default: _result_xjal = super.getParameter( _name_xjal ); break;
+    }
+    return (T) _result_xjal;
+  }
+
+  @AnyLogicInternalCodegenAPI
+  private static String[] _parameterNames_xjal;
+
+  @Override
+  public String[] getParameterNames() {
+    String[] result = _parameterNames_xjal;
+    if (result == null) {
+      List<String> list = new ArrayList<>( Arrays.asList( super.getParameterNames() ) );
+      list.add( "NumberOfMangroves" );
+      list.add( "Toprow" );
+      list.add( "Leftcol" );
+      list.add( "SimExperimentNum" );
+      list.add( "SalinityValue" );
+      list.add( "IFValue" );
+      result = list.toArray( new String[ list.size() ] );
+      _parameterNames_xjal = result;
+    }
+    return result;
+  }
+  // Plain Variables
+
+  public 
+double[][] 
+ Salinity;
+  public 
+Color[][] 
+ salincolor;
+  public 
+double[][] 
+ FONabove;
+  public 
+double[][] 
+ FONbelow;
+  public 
+double 
+ SimulationYear;
+  public 
+ViewArea 
+ selectedViewArea;
+  public 
+double 
+ salinsiteaverage;
+  public 
+double[][] 
+ IF;
+  public 
+double 
+ IFsiteaverage;
+  @AnyLogicInternalCodegenAPI
+  private static Map<String, IElementDescriptor> elementDesciptors_xjal = createElementDescriptors( Main.class );
+  
+  @AnyLogicInternalCodegenAPI
+  @Override
+  public Map<String, IElementDescriptor> getElementDesciptors() {
+    return elementDesciptors_xjal;
+  }
+  @AnyLogicCustomProposalPriority(type = AnyLogicCustomProposalPriority.Type.STATIC_ELEMENT)
+  public static final Scale scale = new Scale( 20.0 );
+
+  @Override
+  public Scale getScale() {
+    return scale;
+  }
+
+
+  // Events
+	
+  @AnyLogicInternalCodegenAPI
+  public EventTimeout _NSpecies1ds_autoUpdateEvent_xjal = new EventTimeout(this);	
+  @AnyLogicInternalCodegenAPI
+  public EventTimeout _BiomassSpecies1ds_autoUpdateEvent_xjal = new EventTimeout(this);	
+  @AnyLogicInternalCodegenAPI
+  public EventTimeout _BiomassSpecies3ds_autoUpdateEvent_xjal = new EventTimeout(this);	
+  @AnyLogicInternalCodegenAPI
+  public EventTimeout _BiomassSpecies2ds_autoUpdateEvent_xjal = new EventTimeout(this);	
+  @AnyLogicInternalCodegenAPI
+  public EventTimeout _BiomassSpecies4ds_autoUpdateEvent_xjal = new EventTimeout(this);	
+  @AnyLogicInternalCodegenAPI
+  public EventTimeout _BiomassSpecies6ds_autoUpdateEvent_xjal = new EventTimeout(this);	
+  @AnyLogicInternalCodegenAPI
+  public EventTimeout _BiomassSpecies5ds_autoUpdateEvent_xjal = new EventTimeout(this);	
+  @AnyLogicInternalCodegenAPI
+  public EventTimeout _BiomassSpecies7ds_autoUpdateEvent_xjal = new EventTimeout(this);	
+  @AnyLogicInternalCodegenAPI
+  public EventTimeout _BiomassSpecies8ds_autoUpdateEvent_xjal = new EventTimeout(this);	
+  @AnyLogicInternalCodegenAPI
+  public EventTimeout _BiomassTotalds_autoUpdateEvent_xjal = new EventTimeout(this);	
+  @AnyLogicInternalCodegenAPI
+  public EventTimeout _CountTotalds_autoUpdateEvent_xjal = new EventTimeout(this);	
+  @AnyLogicInternalCodegenAPI
+  public EventTimeout _BiomassSpecies9ds_autoUpdateEvent_xjal = new EventTimeout(this);	
+  @AnyLogicInternalCodegenAPI
+  public EventTimeout _Speciescountplot_autoUpdateEvent_xjal = new EventTimeout(this);	
+  @AnyLogicInternalCodegenAPI
+  public EventTimeout _totalAGBplot_autoUpdateEvent_xjal = new EventTimeout(this);
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public String getNameOf( EventTimeout _e ) {
+     if( _e == _NSpecies1ds_autoUpdateEvent_xjal ) return "NSpecies1ds auto update event";
+     if( _e == _BiomassSpecies1ds_autoUpdateEvent_xjal ) return "BiomassSpecies1ds auto update event";
+     if( _e == _BiomassSpecies3ds_autoUpdateEvent_xjal ) return "BiomassSpecies3ds auto update event";
+     if( _e == _BiomassSpecies2ds_autoUpdateEvent_xjal ) return "BiomassSpecies2ds auto update event";
+     if( _e == _BiomassSpecies4ds_autoUpdateEvent_xjal ) return "BiomassSpecies4ds auto update event";
+     if( _e == _BiomassSpecies6ds_autoUpdateEvent_xjal ) return "BiomassSpecies6ds auto update event";
+     if( _e == _BiomassSpecies5ds_autoUpdateEvent_xjal ) return "BiomassSpecies5ds auto update event";
+     if( _e == _BiomassSpecies7ds_autoUpdateEvent_xjal ) return "BiomassSpecies7ds auto update event";
+     if( _e == _BiomassSpecies8ds_autoUpdateEvent_xjal ) return "BiomassSpecies8ds auto update event";
+     if( _e == _BiomassTotalds_autoUpdateEvent_xjal ) return "BiomassTotalds auto update event";
+     if( _e == _CountTotalds_autoUpdateEvent_xjal ) return "CountTotalds auto update event";
+     if( _e == _BiomassSpecies9ds_autoUpdateEvent_xjal ) return "BiomassSpecies9ds auto update event";
+     if( _e == _Speciescountplot_autoUpdateEvent_xjal ) return "Speciescountplot auto update event";
+     if( _e == _totalAGBplot_autoUpdateEvent_xjal ) return "totalAGBplot auto update event";
+    return super.getNameOf( _e );
+  }
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public EventTimeout.Mode getModeOf( EventTimeout _e ) {
+    if ( _e == _NSpecies1ds_autoUpdateEvent_xjal ) return EVENT_TIMEOUT_MODE_CYCLIC;
+    if ( _e == _BiomassSpecies1ds_autoUpdateEvent_xjal ) return EVENT_TIMEOUT_MODE_CYCLIC;
+    if ( _e == _BiomassSpecies3ds_autoUpdateEvent_xjal ) return EVENT_TIMEOUT_MODE_CYCLIC;
+    if ( _e == _BiomassSpecies2ds_autoUpdateEvent_xjal ) return EVENT_TIMEOUT_MODE_CYCLIC;
+    if ( _e == _BiomassSpecies4ds_autoUpdateEvent_xjal ) return EVENT_TIMEOUT_MODE_CYCLIC;
+    if ( _e == _BiomassSpecies6ds_autoUpdateEvent_xjal ) return EVENT_TIMEOUT_MODE_CYCLIC;
+    if ( _e == _BiomassSpecies5ds_autoUpdateEvent_xjal ) return EVENT_TIMEOUT_MODE_CYCLIC;
+    if ( _e == _BiomassSpecies7ds_autoUpdateEvent_xjal ) return EVENT_TIMEOUT_MODE_CYCLIC;
+    if ( _e == _BiomassSpecies8ds_autoUpdateEvent_xjal ) return EVENT_TIMEOUT_MODE_CYCLIC;
+    if ( _e == _BiomassTotalds_autoUpdateEvent_xjal ) return EVENT_TIMEOUT_MODE_CYCLIC;
+    if ( _e == _CountTotalds_autoUpdateEvent_xjal ) return EVENT_TIMEOUT_MODE_CYCLIC;
+    if ( _e == _BiomassSpecies9ds_autoUpdateEvent_xjal ) return EVENT_TIMEOUT_MODE_CYCLIC;
+    if ( _e == _Speciescountplot_autoUpdateEvent_xjal ) return EVENT_TIMEOUT_MODE_CYCLIC;
+    if ( _e == _totalAGBplot_autoUpdateEvent_xjal ) return EVENT_TIMEOUT_MODE_CYCLIC;
+    return super.getModeOf( _e );
+  }
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public double getFirstOccurrenceTime( EventTimeout _e ) {
+    double _t;
+    if ( _e == _NSpecies1ds_autoUpdateEvent_xjal ) {
+      _t = 
+0 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if ( _e == _BiomassSpecies1ds_autoUpdateEvent_xjal ) {
+      _t = 
+0 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if ( _e == _BiomassSpecies3ds_autoUpdateEvent_xjal ) {
+      _t = 
+0 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if ( _e == _BiomassSpecies2ds_autoUpdateEvent_xjal ) {
+      _t = 
+0 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if ( _e == _BiomassSpecies4ds_autoUpdateEvent_xjal ) {
+      _t = 
+0 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if ( _e == _BiomassSpecies6ds_autoUpdateEvent_xjal ) {
+      _t = 
+0 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if ( _e == _BiomassSpecies5ds_autoUpdateEvent_xjal ) {
+      _t = 
+0 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if ( _e == _BiomassSpecies7ds_autoUpdateEvent_xjal ) {
+      _t = 
+0 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if ( _e == _BiomassSpecies8ds_autoUpdateEvent_xjal ) {
+      _t = 
+0 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if ( _e == _BiomassTotalds_autoUpdateEvent_xjal ) {
+      _t = 
+0 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if ( _e == _CountTotalds_autoUpdateEvent_xjal ) {
+      _t = 
+0 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if ( _e == _BiomassSpecies9ds_autoUpdateEvent_xjal ) {
+      _t = 
+0 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if ( _e == _Speciescountplot_autoUpdateEvent_xjal ) {
+      _t = 
+0 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if ( _e == _totalAGBplot_autoUpdateEvent_xjal ) {
+      _t = 
+0 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    return super.getFirstOccurrenceTime( _e );
+  }
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public double evaluateTimeoutOf( EventTimeout _e ) {
+    double _t;
+    if( _e == _NSpecies1ds_autoUpdateEvent_xjal) {
+      _t = 
+1 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if( _e == _BiomassSpecies1ds_autoUpdateEvent_xjal) {
+      _t = 
+1 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if( _e == _BiomassSpecies3ds_autoUpdateEvent_xjal) {
+      _t = 
+1 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if( _e == _BiomassSpecies2ds_autoUpdateEvent_xjal) {
+      _t = 
+1 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if( _e == _BiomassSpecies4ds_autoUpdateEvent_xjal) {
+      _t = 
+1 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if( _e == _BiomassSpecies6ds_autoUpdateEvent_xjal) {
+      _t = 
+1 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if( _e == _BiomassSpecies5ds_autoUpdateEvent_xjal) {
+      _t = 
+1 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if( _e == _BiomassSpecies7ds_autoUpdateEvent_xjal) {
+      _t = 
+1 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if( _e == _BiomassSpecies8ds_autoUpdateEvent_xjal) {
+      _t = 
+1 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if( _e == _BiomassTotalds_autoUpdateEvent_xjal) {
+      _t = 
+1 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if( _e == _CountTotalds_autoUpdateEvent_xjal) {
+      _t = 
+1 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if( _e == _BiomassSpecies9ds_autoUpdateEvent_xjal) {
+      _t = 
+1 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if( _e == _Speciescountplot_autoUpdateEvent_xjal) {
+      _t = 
+1 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    if( _e == _totalAGBplot_autoUpdateEvent_xjal) {
+      _t = 
+1 
+;
+      _t = toModelTime( _t, YEAR );
+      return _t;
+    }
+    return super.evaluateTimeoutOf( _e );
+  }
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public void executeActionOf( EventTimeout _e ) {
+    if ( _e == _NSpecies1ds_autoUpdateEvent_xjal ) {
+      NSpecies1ds.update();
+      return;
+    }
+    if ( _e == _BiomassSpecies1ds_autoUpdateEvent_xjal ) {
+      BiomassSpecies1ds.update();
+      return;
+    }
+    if ( _e == _BiomassSpecies3ds_autoUpdateEvent_xjal ) {
+      BiomassSpecies3ds.update();
+      return;
+    }
+    if ( _e == _BiomassSpecies2ds_autoUpdateEvent_xjal ) {
+      BiomassSpecies2ds.update();
+      return;
+    }
+    if ( _e == _BiomassSpecies4ds_autoUpdateEvent_xjal ) {
+      BiomassSpecies4ds.update();
+      return;
+    }
+    if ( _e == _BiomassSpecies6ds_autoUpdateEvent_xjal ) {
+      BiomassSpecies6ds.update();
+      return;
+    }
+    if ( _e == _BiomassSpecies5ds_autoUpdateEvent_xjal ) {
+      BiomassSpecies5ds.update();
+      return;
+    }
+    if ( _e == _BiomassSpecies7ds_autoUpdateEvent_xjal ) {
+      BiomassSpecies7ds.update();
+      return;
+    }
+    if ( _e == _BiomassSpecies8ds_autoUpdateEvent_xjal ) {
+      BiomassSpecies8ds.update();
+      return;
+    }
+    if ( _e == _BiomassTotalds_autoUpdateEvent_xjal ) {
+      BiomassTotalds.update();
+      return;
+    }
+    if ( _e == _CountTotalds_autoUpdateEvent_xjal ) {
+      CountTotalds.update();
+      return;
+    }
+    if ( _e == _BiomassSpecies9ds_autoUpdateEvent_xjal ) {
+      BiomassSpecies9ds.update();
+      return;
+    }
+    if ( _e == _Speciescountplot_autoUpdateEvent_xjal ) {
+      Speciescountplot.updateData();
+      return;
+    }
+    if ( _e == _totalAGBplot_autoUpdateEvent_xjal ) {
+      totalAGBplot.updateData();
+      return;
+    }
+    super.executeActionOf( _e );
+  }
+
+	
+
+  /** Internal constant, shouldn't be accessed by user */
+  @AnyLogicInternalCodegenAPI
+  protected static final int _STATECHART_COUNT_xjal = 0;
+
+
+  // Embedded Objects
+
+  @AnyLogicInternalCodegenAPI
+  private static final AgentAnimationSettings _mangroves_animationSettings_xjal = new AgentAnimationSettings(1000L, 1000000000L);
+
+  public String getNameOf( Agent ao ) {
+    return super.getNameOf( ao );
+  }
+
+  public AgentAnimationSettings getAnimationSettingsOf( Agent ao ) {
+    return super.getAnimationSettingsOf( ao );
+  }
+
+  public class _mangroves_Population extends AgentArrayList<Mangrove> {
+    _mangroves_Population( Agent owner ) {
+      super( owner );
+    }
+
+    @AnyLogicInternalCodegenAPI
+    public Mangrove instantiateAgent( int index ) {
+    	return instantiate_mangroves_xjal( index );
+    }
+
+    @AnyLogicInternalCodegenAPI
+    public void callSetupParameters( Mangrove agent, int index, TableInput tableInput ) {
+      setupParameters_mangroves_xjal( agent, index, tableInput );
+    }
+
+    @AnyLogicInternalCodegenAPI
+    public void callCreate( Mangrove agent, int index, TableInput tableInput ) {
+      doBeforeCreate_mangroves_xjal( agent, index, tableInput );
+      agent.create();
+    }
+
+    @AnyLogicInternalCodegenAPI
+    public boolean isPresentationEnabled() {
+      return true;
+    }
+
+
+    public int NSpecies1() {
+      return _mangroves_NSpecies1_xjal();
+    }
+
+    public int NSpecies2() {
+      return _mangroves_NSpecies2_xjal();
+    }
+
+    public int NSpecies3() {
+      return _mangroves_NSpecies3_xjal();
+    }
+
+    public double TotalAGB() {
+      return _mangroves_TotalAGB_xjal();
+    }
+
+    public double BiomassSpecies1() {
+      return _mangroves_BiomassSpecies1_xjal();
+    }
+
+    public double BiomassSpecies2() {
+      return _mangroves_BiomassSpecies2_xjal();
+    }
+
+    public double BiomassSpecies3() {
+      return _mangroves_BiomassSpecies3_xjal();
+    }
+
+    public double BiomassSpecies4() {
+      return _mangroves_BiomassSpecies4_xjal();
+    }
+
+    public double BiomassSpecies5() {
+      return _mangroves_BiomassSpecies5_xjal();
+    }
+
+    public double BiomassSpecies6() {
+      return _mangroves_BiomassSpecies6_xjal();
+    }
+
+    public double BiomassSpecies7() {
+      return _mangroves_BiomassSpecies7_xjal();
+    }
+
+    public double BiomassSpecies8() {
+      return _mangroves_BiomassSpecies8_xjal();
+    }
+
+    public int TotalCount() {
+      return _mangroves_TotalCount_xjal();
+    }
+
+    public double BiomassSpecies9() {
+      return _mangroves_BiomassSpecies9_xjal();
+    }
+  }
+  
+  @AnyLogicCustomProposalType(value = AnyLogicCustomProposalType.Label.POPULATION, customText = "Mangrove")
+  public _mangroves_Population mangroves = new _mangroves_Population( this );
+
+  public String getNameOf( AgentList<?> aolist ) {
+    if( aolist == mangroves ) return "mangroves";
+    return super.getNameOf( aolist );
+  }
+  
+  public AgentAnimationSettings getAnimationSettingsOf( AgentList<?> aolist ) {
+    if( aolist == mangroves ) return _mangroves_animationSettings_xjal;
+    return super.getAnimationSettingsOf( aolist );
+  }
+
+  /**
+   * Returns the agent element at the specified position in mangroves
+   * population.
+   * @see com.anylogic.engine.AgentList#get(int)
+   * @since 7.3.7
+   */
+  public Mangrove mangroves(int index) {
+    return mangroves.get( index );
+  }
+
+  /**
+   * This method creates and adds new embedded object in the replicated embedded object collection mangroves<br>
+   * @return newly created embedded object
+   */
+  public Mangrove add_mangroves() {
+    int index = mangroves.size();
+    Mangrove _result_xjal = instantiate_mangroves_xjal( index );
+    mangroves.callSetupParameters( _result_xjal, index );
+    mangroves.callCreate( _result_xjal, index );
+    _result_xjal.start();
+    return _result_xjal;
+  }
+
+  /**
+   * This method creates and adds new embedded object in the replicated embedded object collection mangroves<br>
+   * This method uses given parameter values to setup created embedded object<br>
+   * Index of this new embedded object instance can be obtained through calling <code>mangroves.size()</code> method <strong>before</strong> this method is called
+   * @param offspringdcons
+   * @param hmaxcons
+   * @param dbhmaxcons
+   * @param b2cons
+   * @param Gcons
+   * @param b3cons
+   * @param speciesnumber
+   * @param speciesname
+   * @param Smax
+   * @param WoodDens
+   * @param SaltTol
+   * @param ShadingTol
+   * @param Agemax
+   * @param IntZone
+   * @return newly created embedded object
+   */
+  public Mangrove add_mangroves( double offspringdcons, double hmaxcons, double dbhmaxcons, double b2cons, double Gcons, double b3cons, int speciesnumber, String speciesname, double Smax, double WoodDens, String SaltTol, String ShadingTol, double Agemax, String IntZone ) {
+    int index = mangroves.size();
+    Mangrove _result_xjal = instantiate_mangroves_xjal( index );
+    // Setup parameters
+    _result_xjal.markParametersAreSet();
+    _result_xjal.offspringdcons = offspringdcons;
+    _result_xjal.hmaxcons = hmaxcons;
+    _result_xjal.dbhmaxcons = dbhmaxcons;
+    _result_xjal.b2cons = b2cons;
+    _result_xjal.Gcons = Gcons;
+    _result_xjal.b3cons = b3cons;
+    _result_xjal.speciesnumber = speciesnumber;
+    _result_xjal.speciesname = speciesname;
+    _result_xjal.Smax = Smax;
+    _result_xjal.WoodDens = WoodDens;
+    _result_xjal.SaltTol = SaltTol;
+    _result_xjal.ShadingTol = ShadingTol;
+    _result_xjal.Agemax = Agemax;
+    _result_xjal.IntZone = IntZone;
+    // Finish embedded object creation
+    mangroves.callCreate( _result_xjal, index );
+    _result_xjal.start();
+    return _result_xjal;
+  }
+
+  /**
+   * This method removes the given embedded object from the replicated embedded object collection mangroves<br>
+   * The given object is destroyed, but not immediately in common case.
+   * @param object the active object - element of replicated embedded object mangroves - which should be removed
+   * @return <code>true</code> if object was removed successfully, <code>false</code> if it doesn't belong to mangroves
+   */
+  public boolean remove_mangroves( Mangrove object ) {
+    if( ! mangroves._remove( object ) ) {
+      return false;
+    }
+    object.removeFromFlowchart();
+    object.setDestroyed();
+    return true;
+  }
+
+  /**
+   * Creates an embedded object instance and adds it to the end of replicated embedded object list<br>
+   * <i>This method should not be called by user</i>
+   */
+  protected Mangrove instantiate_mangroves_xjal( final int index ) {
+    Mangrove _result_xjal = new Mangrove( getEngine(), this, mangroves );
+    
+    mangroves._add( _result_xjal );
+
+    return _result_xjal;
+  }
+
+  /**
+   * Setups parameters of an embedded object instance<br>
+   * This method should not be called by user
+   */
+  private void setupParameters_mangroves_xjal( final Mangrove self, final int index, TableInput _t ) {
+    self.offspringdcons = self._offspringdcons_DefaultValue_xjal();
+    self.hmaxcons = self._hmaxcons_DefaultValue_xjal();
+    self.dbhmaxcons = self._dbhmaxcons_DefaultValue_xjal();
+    self.b2cons = self._b2cons_DefaultValue_xjal();
+    self.Gcons = self._Gcons_DefaultValue_xjal();
+    self.b3cons = self._b3cons_DefaultValue_xjal();
+    self.speciesnumber = self._speciesnumber_DefaultValue_xjal();
+    self.speciesname = self._speciesname_DefaultValue_xjal();
+    self.Smax = self._Smax_DefaultValue_xjal();
+    self.WoodDens = self._WoodDens_DefaultValue_xjal();
+    self.SaltTol = self._SaltTol_DefaultValue_xjal();
+    self.ShadingTol = self._ShadingTol_DefaultValue_xjal();
+    self.Agemax = self._Agemax_DefaultValue_xjal();
+    self.IntZone = self._IntZone_DefaultValue_xjal();
+  }
+
+  /**
+   * Setups an embedded object instance<br>
+   * This method should not be called by user
+   */
+  @AnyLogicInternalCodegenAPI
+  private void doBeforeCreate_mangroves_xjal( Mangrove self, final int index, TableInput _t ) {
+	double _initial_speed = 
+0 
+;
+	self.setSpeed(_initial_speed, MPS);
+    self.setEnvironment( this );
+    self.setXYZ( 117.0, 112.0, 0.0 );
+
+    // Port connections
+  }
+
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  private int _mangroves_NSpecies1_xjal() {
+    int _value = 0;
+    for ( Mangrove item : mangroves ) {
+      boolean _t = 
+item.speciesnumber == 1 & item.inState(Mangrove.Mature) 
+;
+      if ( _t ) {
+        _value++;
+      }
+    }
+    return _value;
+  }
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  private int _mangroves_NSpecies2_xjal() {
+    int _value = 0;
+    for ( Mangrove item : mangroves ) {
+      boolean _t = 
+item.speciesnumber == 2 & item.inState(Mangrove.Mature) 
+;
+      if ( _t ) {
+        _value++;
+      }
+    }
+    return _value;
+  }
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  private int _mangroves_NSpecies3_xjal() {
+    int _value = 0;
+    for ( Mangrove item : mangroves ) {
+      boolean _t = 
+item.speciesnumber == 3 & item.inState(Mangrove.Mature) 
+;
+      if ( _t ) {
+        _value++;
+      }
+    }
+    return _value;
+  }
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  private double _mangroves_TotalAGB_xjal() {
+    double _value = 0;
+    for ( Mangrove item : mangroves ) {
+      boolean _t = 
+item.inState(Mangrove.Mature) 
+;
+      if ( _t ) {
+        _value += 
+item.AGB 
+;
+      }
+    }
+    return _value;
+  }
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  private double _mangroves_BiomassSpecies1_xjal() {
+    double _value = 0;
+    for ( Mangrove item : mangroves ) {
+      boolean _t = 
+item.speciesnumber == 1 & item.inState(Mangrove.Mature) 
+;
+      if ( _t ) {
+        _value += 
+item.AGB 
+;
+      }
+    }
+    return _value;
+  }
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  private double _mangroves_BiomassSpecies2_xjal() {
+    double _value = 0;
+    for ( Mangrove item : mangroves ) {
+      boolean _t = 
+item.speciesnumber == 2 & item.inState(Mangrove.Mature) 
+;
+      if ( _t ) {
+        _value += 
+item.AGB 
+;
+      }
+    }
+    return _value;
+  }
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  private double _mangroves_BiomassSpecies3_xjal() {
+    double _value = 0;
+    for ( Mangrove item : mangroves ) {
+      boolean _t = 
+item.speciesnumber == 3 & item.inState(Mangrove.Mature) 
+;
+      if ( _t ) {
+        _value += 
+item.AGB 
+;
+      }
+    }
+    return _value;
+  }
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  private double _mangroves_BiomassSpecies4_xjal() {
+    double _value = 0;
+    for ( Mangrove item : mangroves ) {
+      boolean _t = 
+item.speciesnumber == 4 & item.inState(Mangrove.Mature) 
+;
+      if ( _t ) {
+        _value += 
+item.AGB 
+;
+      }
+    }
+    return _value;
+  }
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  private double _mangroves_BiomassSpecies5_xjal() {
+    double _value = 0;
+    for ( Mangrove item : mangroves ) {
+      boolean _t = 
+item.speciesnumber == 5 & item.inState(Mangrove.Mature) 
+;
+      if ( _t ) {
+        _value += 
+item.AGB 
+;
+      }
+    }
+    return _value;
+  }
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  private double _mangroves_BiomassSpecies6_xjal() {
+    double _value = 0;
+    for ( Mangrove item : mangroves ) {
+      boolean _t = 
+item.speciesnumber == 6 & item.inState(Mangrove.Mature) 
+;
+      if ( _t ) {
+        _value += 
+item.AGB 
+;
+      }
+    }
+    return _value;
+  }
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  private double _mangroves_BiomassSpecies7_xjal() {
+    double _value = 0;
+    for ( Mangrove item : mangroves ) {
+      boolean _t = 
+item.speciesnumber == 7 & item.inState(Mangrove.Mature) 
+;
+      if ( _t ) {
+        _value += 
+item.AGB 
+;
+      }
+    }
+    return _value;
+  }
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  private double _mangroves_BiomassSpecies8_xjal() {
+    double _value = 0;
+    for ( Mangrove item : mangroves ) {
+      boolean _t = 
+item.speciesnumber == 8 & item.inState(Mangrove.Mature) 
+;
+      if ( _t ) {
+        _value += 
+item.AGB 
+;
+      }
+    }
+    return _value;
+  }
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  private int _mangroves_TotalCount_xjal() {
+    int _value = 0;
+    for ( Mangrove item : mangroves ) {
+      boolean _t = 
+item.inState(Mangrove.Mature) 
+;
+      if ( _t ) {
+        _value++;
+      }
+    }
+    return _value;
+  }
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  private double _mangroves_BiomassSpecies9_xjal() {
+    double _value = 0;
+    for ( Mangrove item : mangroves ) {
+      boolean _t = 
+item.speciesnumber == 9 & item.inState(Mangrove.Mature) 
+;
+      if ( _t ) {
+        _value += 
+item.AGB 
+;
+      }
+    }
+    return _value;
+  }
+  // Functions
+
+  void placeMangroves(  ) { 
+
+//all saplings, equal number of species
+
+int noofspecies = 8;
+int mangroveindex = 0;
+int mangrovegridno = (int) Math.floor(Math.sqrt(NumberOfMangroves));
+double pixelpergrid = 1000 / mangrovegridno;
+int mangrovecolno = 1;
+int mangroverowno = 1;
+
+int snumber = uniform_discr(1, noofspecies);
+for( Mangrove mang : mangroves ) {
+	double x = uniform(pixelpergrid*(mangrovecolno-1), pixelpergrid*mangrovecolno); 
+	double y = uniform(pixelpergrid*(mangroverowno-1), pixelpergrid*mangroverowno); 
+	
+	if (mangroverowno > mangrovegridno){
+		x = uniform(1000);
+		y = uniform(1000);
+	}
+	
+	mang.jumpTo(x, y);
+	mang.speciesnumber = snumber;
+	snumber = snumber + 1;
+	if (snumber > noofspecies) {
+		snumber = 1;
+	}
+	/*
+	if (mang.speciesnumber == 1) {
+		mang.dbh = uniform(5.1, 140);
+	}
+	if (mang.speciesnumber == 2) {
+		mang.dbh = uniform(5.1, 80);
+	}
+	if (mang.speciesnumber == 3) {
+		mang.dbh = uniform(5.1, 100);
+	}
+	//*/
+	mang.dbh = 1.27; //cm
+	mang.Initializemangrove();
+	mangroveindex = mangroveindex + 1;
+	mangrovecolno = mangrovecolno + 1;
+	if (mangrovecolno == mangrovegridno){
+		mangrovecolno = 1;
+		mangroverowno = mangroverowno + 1;
+	}
+} 
+  }
+
+  void updateSalinity(  ) { 
+
+/*for ( int i = 0; i < 100; i++ ) 
+	for ( int j = 0; j < 100; j++ )
+		if ( Salinity[i][j] > 0 ) 
+			Salinity[i][j] = limitMax( Salinity[i][j] + 15, ( 40 - Elevation[i][j] ) * 10000 );
+*/
+//reset flag
+//vegetationDrawn = false;
+      
+ 
+  }
+
+  void updateInundation(  ) { 
+
+/*for ( int i = 0; i < 100; i++ ) 
+	for ( int j = 0; j < 100; j++ )
+		if ( Inundation[i][j] > 0 ) 
+			Inundation[i][j] = limitMax( Inundation[i][j] + 15, ( 40 - Elevation[i][j] ) * 10000 );
+*/
+//reset flag
+//vegetationDrawn = false;
+      
+ 
+  }
+
+  
+Color 
+ SalinityToColor( double sal ) { 
+
+Color colorreturn = black;
+
+if (sal == -9999){
+	colorreturn = shapeAltColorNoVal.getFillColor();
+} else if (sal >= 12 && sal < 13) {
+	colorreturn = shapeAltColor14.getFillColor();
+} else if (sal >= 13 && sal < 15){
+	colorreturn = lerpColor( (sal - 13) / 2,   shapeAltColor14.getFillColor(), 
+                                     shapeAltColor16.getFillColor() );
+} else if (sal >= 15 && sal < 17){
+  	colorreturn = lerpColor( (sal - 15) / 2,   shapeAltColor16.getFillColor(), 
+                                     shapeAltColor18.getFillColor() );
+} else if(sal >= 17 && sal < 19){ 
+	colorreturn = lerpColor( (sal - 17) / 2,  shapeAltColor18.getFillColor(), 
+                                     shapeAltColor20.getFillColor() );
+} else if(sal >= 19 && sal < 21){
+	colorreturn = lerpColor( (sal - 19) / 2, shapeAltColor20.getFillColor(), 
+                                     shapeAltColor22.getFillColor() );
+} else if(sal >= 21 && sal < 23){
+	colorreturn = lerpColor( (sal - 21) / 2, shapeAltColor22.getFillColor(), 
+                                     shapeAltColor24.getFillColor() );
+} else if(sal >= 23 && sal < 25){
+	colorreturn = lerpColor( (sal - 23) / 2, shapeAltColor24.getFillColor(), 
+                                     shapeAltColor26.getFillColor() );
+} else if(sal >= 25 && sal < 27){
+	colorreturn = lerpColor( (sal - 25) / 2, shapeAltColor26.getFillColor(), 
+                                     shapeAltColor28.getFillColor() );
+} else if(sal >= 27 && sal < 29){
+	colorreturn = lerpColor( (sal - 27) / 2, shapeAltColor28.getFillColor(), 
+                                     shapeAltColor30.getFillColor() );
+} else if(sal >= 29 && sal < 31){
+	colorreturn = lerpColor( (sal - 29) / 2, shapeAltColor30.getFillColor(), 
+                                     shapeAltColor32.getFillColor() );                                     
+} else if(sal >= 31){
+	colorreturn = shapeAltColor32.getFillColor();
+}
+
+return colorreturn; 
+  }
+
+  void updateFON(  ) { 
+
+//Competition constants
+double Imaxabove = 0.95;
+double Iminabove = 0.07;
+double Imaxbelow = 0.05;
+double Iminbelow = 0.999;
+//
+
+for ( int i = 0; i < 250; i++ ){
+	for ( int j = 0; j < 250; j++ ) {
+		double x_field = i*4; //4 pix per cell
+		double y_field = j*4; //4 pix per cell
+		double sumFONabove = 0; //for light availbility
+		double sumFONbelow = 0; //for underground resources availability
+		//for (Mangrove mang: findAll(mangroves, m -> m.mangcrown.contains(x_field, y_field))){ //or mang FON?
+		for (Mangrove mang: filter(mangroves, m -> m.distanceTo(x_field, y_field) < 120)){ //120 px = 6m
+			double mangdist = mang.distanceTo(x_field, y_field); //px
+			double mangtrunk = mang.trunk_radius*20/100; //px		
+			//double mangcrown = mang.crown_radius*20/100; //px
+			double mangFON = mang.FON_radius*20/100; //px
+			double FONabove = 0; 
+			double FONbelow = 0; 
+			
+			if (mangdist >= 0 & mangdist < mangtrunk){ //px //m
+				FONabove = Imaxabove;
+				FONbelow = Imaxbelow;
+			} else if (mangdist >= mangtrunk & mangdist <= mangFON){ //m
+				FONabove = Imaxabove*Math.exp(-Math.abs(Math.log(Iminabove))*((mangdist*100/20)-mang.trunk_radius)/(mang.FON_radius-mang.trunk_radius));
+				FONbelow = Imaxbelow*Math.exp(-Math.abs(Math.log(Iminbelow))*((mangdist*100/20)-mang.trunk_radius)/(mang.FON_radius-mang.trunk_radius));
+			} else if (mangdist > mangFON){ //m
+				FONabove = 0;
+				FONbelow = 0;
+			}
+			sumFONabove = sumFONabove + FONabove;
+			sumFONbelow = sumFONbelow + FONbelow;
+		}
+		FONabove[i][j] = sumFONabove;
+		FONbelow[i][j] = sumFONbelow;
+	}
+} 
+  }
+
+  void SetupSiteSalinity(  ) { 
+
+//For Salinityexcel
+double salinsitetotal = 0;
+double salinnoofvalues = 0;
+
+int colcounter = 0;
+int rowcounter = 0;
+for (int columnno = Leftcol; columnno < Leftcol + 10; columnno++){
+	for (int rowno = Toprow; rowno < Toprow + 10; rowno++){
+		double salincellten = salinityASCII.getCellNumericValue(1, rowno, columnno);
+		if (salincellten != -9999){
+			salinsitetotal = salinsitetotal + salincellten;
+			salinnoofvalues = salinnoofvalues + 1;
+		}
+		for ( int i = colcounter*10 ; i < ((colcounter*10) + 10); i++ ) {
+			for ( int j = rowcounter*10 ; j < ((rowcounter*10) + 10); j++ ) {
+				Salinity[i][j] = salincellten;
+			}
+		}
+		rowcounter += 1;
+	}
+	colcounter += 1;
+	rowcounter = 0;
+}
+salinsiteaverage = salinsitetotal/salinnoofvalues;
+
+
+for( int i = 0; i < 100; i++ ){
+	for( int j = 0; j < 100; j++ ){
+		if (Salinity[i][j] == -9999){
+			Salinity[i][j] = salinsiteaverage;
+		}
+		salincolor[i][j] = SalinityToColor( Salinity[i][j] );
+    }
+}
+textavesalinity.setText(format(salinsiteaverage)); 
+  }
+
+  void updateTime(  ) { 
+
+SimulationYear += 1;
+textsimtime.setText(SimulationYear); 
+  }
+
+  void navigate( ViewArea viewArea ) { 
+
+selectedViewArea = viewArea;
+viewArea.navigateTo();
+groupMainMenu.setPos( viewArea.getX(), viewArea.getY() ); 
+  }
+
+  void SetupTestSalinity(  ) { 
+
+salinsiteaverage = SalinityValue;
+for ( int i = 0; i < 100; i++ ){
+	for ( int j = 0; j < 100; j++ ) {
+		Salinity[i][j] = SalinityValue;
+	}
+}
+
+for( int i = 0; i < 100; i++ ){
+	for( int j = 0; j < 100; j++ ){
+		salincolor[i][j] = SalinityToColor( Salinity[i][j] );
+    }
+}
+textavesalinity.setText(format(salinsiteaverage)); 
+  }
+
+  void SetupSiteIF(  ) { 
+
+//For IFexcel
+double IFsitetotal = 0;
+double IFnoofvalues = 0;
+
+int colcounter = 0;
+int rowcounter = 0;
+for (int columnno = Leftcol; columnno < Leftcol + 10; columnno++){
+	for (int rowno = Toprow; rowno < Toprow + 10; rowno++){
+		double IFcellten = IFASCII.getCellNumericValue(1, rowno, columnno);
+		if (IFcellten != -9999){
+			IFsitetotal = IFsitetotal + IFcellten;
+			IFnoofvalues = IFnoofvalues + 1;
+		}
+		for ( int i = colcounter*10 ; i < ((colcounter*10) + 10); i++ ) {
+			for ( int j = rowcounter*10 ; j < ((rowcounter*10) + 10); j++ ) {
+				IF[i][j] = IFcellten;
+			}
+		}
+		rowcounter += 1;
+	}
+	colcounter += 1;
+	rowcounter = 0;
+}
+IFsiteaverage = IFsitetotal/IFnoofvalues;
+
+
+for( int i = 0; i < 100; i++ ){
+	for( int j = 0; j < 100; j++ ){
+		if (IF[i][j] == -9999){
+			IF[i][j] = IFsiteaverage;
+		}
+		//IFcolor[i][j] = IFToColor( IF[i][j] );
+    }
+}
+textaveIF.setText(format(IFsiteaverage)); 
+  }
+
+  void SetupTestIF(  ) { 
+
+IFsiteaverage = IFValue;
+for ( int i = 0; i < 100; i++ ){
+	for ( int j = 0; j < 100; j++ ) {
+		IF[i][j] = IFValue;
+	}
+}
+
+/*
+for( int i = 0; i < 100; i++ ){
+	for( int j = 0; j < 100; j++ ){
+		IFcolor[i][j] = IFToColor( IF[i][j] );
+    }
+}*/
+
+textaveIF.setText(format(IFsiteaverage)); 
+  }
+  // Analysis Data Elements
+  @AnyLogicInternalCodegenAPI
+  public DataSet _Speciescountplot_expression0_dataSet_xjal = new DataSet( 500, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), __Speciescountplot_expression0_dataSet_xjal_YValue() );
+      _lastUpdateX = time();
+    }
+  } );
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double __Speciescountplot_expression0_dataSet_xjal_YValue() {
+    return 
+mangroves.BiomassSpecies1() 
+;
+  }
+
+  @AnyLogicInternalCodegenAPI
+  public DataSet _Speciescountplot_expression1_dataSet_xjal = new DataSet( 500, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), __Speciescountplot_expression1_dataSet_xjal_YValue() );
+      _lastUpdateX = time();
+    }
+  } );
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double __Speciescountplot_expression1_dataSet_xjal_YValue() {
+    return 
+mangroves.BiomassSpecies2() 
+;
+  }
+
+  @AnyLogicInternalCodegenAPI
+  public DataSet _Speciescountplot_expression2_dataSet_xjal = new DataSet( 500, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), __Speciescountplot_expression2_dataSet_xjal_YValue() );
+      _lastUpdateX = time();
+    }
+  } );
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double __Speciescountplot_expression2_dataSet_xjal_YValue() {
+    return 
+mangroves.BiomassSpecies9() 
+;
+  }
+
+  @AnyLogicInternalCodegenAPI
+  public DataSet _Speciescountplot_expression3_dataSet_xjal = new DataSet( 500, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), __Speciescountplot_expression3_dataSet_xjal_YValue() );
+      _lastUpdateX = time();
+    }
+  } );
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double __Speciescountplot_expression3_dataSet_xjal_YValue() {
+    return 
+mangroves.BiomassSpecies3() 
+;
+  }
+
+  @AnyLogicInternalCodegenAPI
+  public DataSet _Speciescountplot_expression4_dataSet_xjal = new DataSet( 500, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), __Speciescountplot_expression4_dataSet_xjal_YValue() );
+      _lastUpdateX = time();
+    }
+  } );
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double __Speciescountplot_expression4_dataSet_xjal_YValue() {
+    return 
+mangroves.BiomassSpecies4() 
+;
+  }
+
+  @AnyLogicInternalCodegenAPI
+  public DataSet _Speciescountplot_expression5_dataSet_xjal = new DataSet( 500, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), __Speciescountplot_expression5_dataSet_xjal_YValue() );
+      _lastUpdateX = time();
+    }
+  } );
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double __Speciescountplot_expression5_dataSet_xjal_YValue() {
+    return 
+mangroves.BiomassSpecies5() 
+;
+  }
+
+  @AnyLogicInternalCodegenAPI
+  public DataSet _Speciescountplot_expression6_dataSet_xjal = new DataSet( 500, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), __Speciescountplot_expression6_dataSet_xjal_YValue() );
+      _lastUpdateX = time();
+    }
+  } );
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double __Speciescountplot_expression6_dataSet_xjal_YValue() {
+    return 
+mangroves.BiomassSpecies6() 
+;
+  }
+
+  @AnyLogicInternalCodegenAPI
+  public DataSet _Speciescountplot_expression7_dataSet_xjal = new DataSet( 500, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), __Speciescountplot_expression7_dataSet_xjal_YValue() );
+      _lastUpdateX = time();
+    }
+  } );
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double __Speciescountplot_expression7_dataSet_xjal_YValue() {
+    return 
+mangroves.BiomassSpecies7() 
+;
+  }
+
+  @AnyLogicInternalCodegenAPI
+  public DataSet _Speciescountplot_expression8_dataSet_xjal = new DataSet( 500, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), __Speciescountplot_expression8_dataSet_xjal_YValue() );
+      _lastUpdateX = time();
+    }
+  } );
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double __Speciescountplot_expression8_dataSet_xjal_YValue() {
+    return 
+mangroves.BiomassSpecies8() 
+;
+  }
+
+  @AnyLogicInternalCodegenAPI
+  public DataSet _totalAGBplot_expression0_dataSet_xjal = new DataSet( 500, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), __totalAGBplot_expression0_dataSet_xjal_YValue() );
+      _lastUpdateX = time();
+    }
+  } );
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double __totalAGBplot_expression0_dataSet_xjal_YValue() {
+    return 
+mangroves.TotalAGB() 
+;
+  }
+
+  public DataSet NSpecies1ds = new DataSet( 301, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), _NSpecies1ds_YValue() );
+      _lastUpdateX = time();
+    }
+    @Override
+    public double getDataXValue() {
+      return time();
+    }
+  } );
+
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double _NSpecies1ds_YValue() {
+    return 
+mangroves.NSpecies1() 
+;
+  }
+  
+  public DataSet BiomassSpecies1ds = new DataSet( 601, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), _BiomassSpecies1ds_YValue() );
+      _lastUpdateX = time();
+    }
+    @Override
+    public double getDataXValue() {
+      return time();
+    }
+  } );
+
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double _BiomassSpecies1ds_YValue() {
+    return 
+mangroves.BiomassSpecies1() 
+;
+  }
+  
+  public DataSet BiomassSpecies3ds = new DataSet( 601, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), _BiomassSpecies3ds_YValue() );
+      _lastUpdateX = time();
+    }
+    @Override
+    public double getDataXValue() {
+      return time();
+    }
+  } );
+
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double _BiomassSpecies3ds_YValue() {
+    return 
+mangroves.BiomassSpecies3() 
+;
+  }
+  
+  public DataSet BiomassSpecies2ds = new DataSet( 601, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), _BiomassSpecies2ds_YValue() );
+      _lastUpdateX = time();
+    }
+    @Override
+    public double getDataXValue() {
+      return time();
+    }
+  } );
+
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double _BiomassSpecies2ds_YValue() {
+    return 
+mangroves.BiomassSpecies2() 
+;
+  }
+  
+  public DataSet BiomassSpecies4ds = new DataSet( 601, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), _BiomassSpecies4ds_YValue() );
+      _lastUpdateX = time();
+    }
+    @Override
+    public double getDataXValue() {
+      return time();
+    }
+  } );
+
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double _BiomassSpecies4ds_YValue() {
+    return 
+mangroves.BiomassSpecies4() 
+;
+  }
+  
+  public DataSet BiomassSpecies6ds = new DataSet( 601, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), _BiomassSpecies6ds_YValue() );
+      _lastUpdateX = time();
+    }
+    @Override
+    public double getDataXValue() {
+      return time();
+    }
+  } );
+
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double _BiomassSpecies6ds_YValue() {
+    return 
+mangroves.BiomassSpecies6() 
+;
+  }
+  
+  public DataSet BiomassSpecies5ds = new DataSet( 601, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), _BiomassSpecies5ds_YValue() );
+      _lastUpdateX = time();
+    }
+    @Override
+    public double getDataXValue() {
+      return time();
+    }
+  } );
+
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double _BiomassSpecies5ds_YValue() {
+    return 
+mangroves.BiomassSpecies5() 
+;
+  }
+  
+  public DataSet BiomassSpecies7ds = new DataSet( 601, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), _BiomassSpecies7ds_YValue() );
+      _lastUpdateX = time();
+    }
+    @Override
+    public double getDataXValue() {
+      return time();
+    }
+  } );
+
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double _BiomassSpecies7ds_YValue() {
+    return 
+mangroves.BiomassSpecies7() 
+;
+  }
+  
+  public DataSet BiomassSpecies8ds = new DataSet( 601, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), _BiomassSpecies8ds_YValue() );
+      _lastUpdateX = time();
+    }
+    @Override
+    public double getDataXValue() {
+      return time();
+    }
+  } );
+
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double _BiomassSpecies8ds_YValue() {
+    return 
+mangroves.BiomassSpecies8() 
+;
+  }
+  
+  public DataSet BiomassTotalds = new DataSet( 601, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), _BiomassTotalds_YValue() );
+      _lastUpdateX = time();
+    }
+    @Override
+    public double getDataXValue() {
+      return time();
+    }
+  } );
+
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double _BiomassTotalds_YValue() {
+    return 
+mangroves.TotalAGB()
+ 
+;
+  }
+  
+  public DataSet CountTotalds = new DataSet( 601, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), _CountTotalds_YValue() );
+      _lastUpdateX = time();
+    }
+    @Override
+    public double getDataXValue() {
+      return time();
+    }
+  } );
+
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double _CountTotalds_YValue() {
+    return 
+mangroves.TotalCount()
+ 
+;
+  }
+  
+  public DataSet BiomassSpecies9ds = new DataSet( 601, new DataUpdater_xjal() {
+    double _lastUpdateX = Double.NaN;
+    @Override
+    public void update( DataSet _d ) {
+      if ( time() == _lastUpdateX ) { return; }
+      _d.add( time(), _BiomassSpecies9ds_YValue() );
+      _lastUpdateX = time();
+    }
+    @Override
+    public double getDataXValue() {
+      return time();
+    }
+  } );
+
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private double _BiomassSpecies9ds_YValue() {
+    return 
+mangroves.BiomassSpecies9() 
+;
+  }
+  
+  public double BiomassSpecies1after100yrs;
+  public void update_BiomassSpecies1after100yrs() {
+    BiomassSpecies1after100yrs = 
+BiomassSpecies1ds.getY(300) ;
+  }
+  public void update_BiomassSpecies1after100yrs(double _value) {
+    BiomassSpecies1after100yrs = _value;
+  }
+
+  public double BiomassSpecies2after100yrs;
+  public void update_BiomassSpecies2after100yrs() {
+    BiomassSpecies2after100yrs = 
+BiomassSpecies2ds.getY(300) ;
+  }
+  public void update_BiomassSpecies2after100yrs(double _value) {
+    BiomassSpecies2after100yrs = _value;
+  }
+
+  public double BiomassSpecies3after100yrs;
+  public void update_BiomassSpecies3after100yrs() {
+    BiomassSpecies3after100yrs = 
+BiomassSpecies3ds.getY(300) ;
+  }
+  public void update_BiomassSpecies3after100yrs(double _value) {
+    BiomassSpecies3after100yrs = _value;
+  }
+
+  public double BiomassSpecies4after100yrs;
+  public void update_BiomassSpecies4after100yrs() {
+    BiomassSpecies4after100yrs = 
+BiomassSpecies4ds.getY(300) ;
+  }
+  public void update_BiomassSpecies4after100yrs(double _value) {
+    BiomassSpecies4after100yrs = _value;
+  }
+
+  public double BiomassSpecies5after100yrs;
+  public void update_BiomassSpecies5after100yrs() {
+    BiomassSpecies5after100yrs = 
+BiomassSpecies5ds.getY(300) ;
+  }
+  public void update_BiomassSpecies5after100yrs(double _value) {
+    BiomassSpecies5after100yrs = _value;
+  }
+
+  public double BiomassSpecies6after100yrs;
+  public void update_BiomassSpecies6after100yrs() {
+    BiomassSpecies6after100yrs = 
+BiomassSpecies6ds.getY(300) ;
+  }
+  public void update_BiomassSpecies6after100yrs(double _value) {
+    BiomassSpecies6after100yrs = _value;
+  }
+
+  public double BiomassSpecies7after100yrs;
+  public void update_BiomassSpecies7after100yrs() {
+    BiomassSpecies7after100yrs = 
+BiomassSpecies7ds.getY(300) ;
+  }
+  public void update_BiomassSpecies7after100yrs(double _value) {
+    BiomassSpecies7after100yrs = _value;
+  }
+
+  public double BiomassSpecies8after100yrs;
+  public void update_BiomassSpecies8after100yrs() {
+    BiomassSpecies8after100yrs = 
+BiomassSpecies8ds.getY(300) ;
+  }
+  public void update_BiomassSpecies8after100yrs(double _value) {
+    BiomassSpecies8after100yrs = _value;
+  }
+
+  public double BiomassSpecies9after100yrs;
+  public void update_BiomassSpecies9after100yrs() {
+    BiomassSpecies9after100yrs = 
+BiomassSpecies9ds.getY(300) ;
+  }
+  public void update_BiomassSpecies9after100yrs(double _value) {
+    BiomassSpecies9after100yrs = _value;
+  }
+
+  public double BiomassTotalafter100yrs;
+  public void update_BiomassTotalafter100yrs() {
+    BiomassTotalafter100yrs = 
+BiomassTotalds.getY(300) ;
+  }
+  public void update_BiomassTotalafter100yrs(double _value) {
+    BiomassTotalafter100yrs = _value;
+  }
+
+  // View areas
+  public ViewArea view2D = new ViewArea( this, null, 0, 0, 1140, 1140 );
+  public ViewArea view3D = new ViewArea( this, null, 0, 1240, 1140, 1140 );
+  public ViewArea viewStatistics = new ViewArea( this, null, 0, 2400, 1140, 1140 );
+  public ViewArea _origin_VA = new ViewArea( this, "[Origin]", 0, 0, 1140.0, 1140.0 );
+  @AnyLogicInternalCodegenAPI
+  public ViewArea _window3d_VA = new ViewArea( this, "[window3d]", 0.0, 1290.0, 1140.0, 1090.0 );
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public int getViewAreas(Map<String, ViewArea> _output) {
+    if ( _output != null ) {
+      _output.put( "view2D", this.view2D );
+      _output.put( "view3D", this.view3D );
+      _output.put( "viewStatistics", this.viewStatistics );
+      _output.put( "_origin_VA", this._origin_VA );
+      _output.put( "_window3d_VA", this._window3d_VA );
+    }
+    return 5 + super.getViewAreas( _output );
+  }
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text24_Font = new Font("SansSerif", 0, 26 );
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text25_Font = _text24_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text16_Font = _text24_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text17_Font = _text24_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _textsimtime_Font = new Font("SansSerif", 0, 18 );
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text18_Font = _textsimtime_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text22_Font = _textsimtime_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _textavesalinity_Font = _textsimtime_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text26_Font = _textsimtime_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _textaveIF_Font = _textsimtime_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text_Font = new Font("SansSerif", 0, 9 );
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text1_Font = _text_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text2_Font = _text_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text3_Font = _text_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text4_Font = _text_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text6_Font = new Font("SansSerif", 0, 10 );
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text7_Font = new Font("SansSerif", 0, 13 );
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text8_Font = _text7_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text9_Font = _text7_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text10_Font = _text6_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text13_Font = new Font("SansSerif", 0, 20 );
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text15_Font = _text13_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text5_Font = _text_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text11_Font = _text_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text12_Font = _text7_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text19_Font = _text7_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text20_Font = _text7_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text21_Font = _text7_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text23_Font = _text7_Font;
+  @AnyLogicInternalCodegenAPI
+  protected static final Font _text28_Font = _text7_Font;
+  protected static final Color _shapeAltColor30_Fill_Color = new Color( 0xFF569BB3, true );
+  protected static final Color _shapeAltColor28_Fill_Color = new Color( 0xFF56B4B3, true );
+  protected static final Color _shapeAltColor26_Fill_Color = new Color( 0xFF56B49A, true );
+  protected static final Color _shapeAltColor24_Fill_Color = new Color( 0xFF56B481, true );
+  protected static final Color _shapeAltColor22_Fill_Color = new Color( 0xFF56B468, true );
+  protected static final Color _shapeAltColor20_Fill_Color = new Color( 0xFF56B44F, true );
+  protected static final Color _shapeAltColor18_Fill_Color = new Color( 0xFF6FB44F, true );
+  protected static final Color _shapeAltColor16_Fill_Color = new Color( 0xFF88B44F, true );
+  protected static final Color _oval_Fill_Color = new Color( 0xAA404040, true );
+  protected static final Color _oval2_Fill_Color = new Color( 0xAA808080, true );
+  protected static final Color _oval4_Fill_Color = new Color( 0xAAFF0000, true );
+  protected static final Color _shapeAltColor14_Fill_Color = new Color( 0xFFA1B44F, true );
+  protected static final Color _shapeAltColor32_Fill_Color = new Color( 0xFF5682B3, true );
+  protected static final Color _oval6_Fill_Color = new Color( 0xAA008000, true );
+  protected static final Color _oval8_Fill_Color = new Color( 0xAAFFA500, true );
+  protected static final Color _oval10_Fill_Color = new Color( 0xAA800080, true );
+  protected static final Color _oval12_Fill_Color = new Color( 0xAAFFFF00, true );
+  protected static final Color _oval14_Fill_Color = new Color( 0xAA0000FF, true );
+  protected static final Color _oval18_Fill_Color = new Color( 0xAAD3D3D3, true );
+  @AnyLogicInternalCodegenAPI
+  protected static final int _window3d = 1;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _Speciescountplot = 2;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _totalAGBplot = 3;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _rectangle1 = 4;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _rectangle = 5;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _rectangle6 = 6;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text24 = 7;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _rectangle7 = 8;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text25 = 9;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _rectangle8 = 10;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text16 = 11;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _rectangle9 = 12;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text17 = 13;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _rectangle16 = 14;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _textsimtime = 15;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text18 = 16;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text22 = 17;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _textavesalinity = 18;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text26 = 19;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _textaveIF = 20;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _groupMainMenu = 21;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _mapCanvas = 22;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _canvasenv = 23;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _mangroves_presentation = 24;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _shapeAltColor30 = 25;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _shapeAltColor28 = 26;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _shapeAltColor26 = 27;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _shapeAltColor24 = 28;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _shapeAltColor22 = 29;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _shapeAltColor20 = 30;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _shapeAltColor18 = 31;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _shapeAltColor16 = 32;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text = 33;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text1 = 34;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text2 = 35;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text3 = 36;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text4 = 37;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _camera = 38;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _line1 = 39;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _line2 = 40;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _line3 = 41;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text6 = 42;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _oval = 43;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _oval1 = 44;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text7 = 45;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _oval2 = 46;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _oval3 = 47;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text8 = 48;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _oval4 = 49;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _oval5 = 50;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text9 = 51;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _line4 = 52;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _line5 = 53;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text10 = 54;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text13 = 55;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text15 = 56;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _shapeAltColor14 = 57;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _shapeAltColorNoVal = 58;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text5 = 59;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text11 = 60;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _shapeAltColor32 = 61;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _oval6 = 62;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _oval7 = 63;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text12 = 64;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _oval8 = 65;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _oval9 = 66;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text19 = 67;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _oval10 = 68;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _oval11 = 69;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text20 = 70;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _oval12 = 71;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _oval13 = 72;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text21 = 73;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _oval14 = 74;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _oval15 = 75;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text23 = 76;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _oval18 = 77;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _oval19 = 78;
+  @AnyLogicInternalCodegenAPI
+  protected static final int _text28 = 79;
+
+  /** Internal constant, shouldn't be accessed by user */
+  @AnyLogicInternalCodegenAPI
+  protected static final int _SHAPE_NEXT_ID_xjal = 80;
+
+  @AnyLogicInternalCodegenAPI
+  public boolean isPublicPresentationDefined() {
+    return true;
+  }
+
+  @AnyLogicInternalCodegenAPI
+  public boolean isEmbeddedAgentPresentationVisible( Agent _a ) {
+    return super.isEmbeddedAgentPresentationVisible( _a );
+  }
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public boolean onShapeClick( int _shape, int index, double clickx, double clicky ){
+    switch( _shape ){
+      case _rectangle6:
+        if (true) {
+          ShapeRectangle self = this.rectangle6;
+          
+navigate( view2D ); 
+        }
+        break;
+      case _rectangle7:
+        if (true) {
+          ShapeRectangle self = this.rectangle7;
+          
+navigate( view3D ); 
+        }
+        break;
+      case _rectangle8:
+        if (true) {
+          ShapeRectangle self = this.rectangle8;
+          
+navigate( view2D ); 
+        }
+        break;
+      case _rectangle9:
+        if (true) {
+          ShapeRectangle self = this.rectangle9;
+          
+navigate( viewStatistics ); 
+        }
+        break;
+      default: return super.onShapeClick( _shape, index, clickx, clicky );
+ 	}
+ 	return false;
+  }
+  
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public void onShapeGroupDraw( int _shape, int index ) {
+    switch( _shape ) {
+      case _canvasenv:
+          
+Color c;
+for( int i = 0; i < 100; i++ ) {
+	for( int j = 0; j < 100; j++ ) {
+		c = salincolor[i][j];
+		mapCanvas.fillRectangle(i * 10, j * 10, 10, 10, c );
+	}   
+} 
+        break;
+      default:
+        super.onShapeGroupDraw( _shape, index );
+        break;
+    }
+  }
+  
+  protected ShapeWindow3D window3d;
+  protected TimePlot Speciescountplot;
+  protected TimePlot totalAGBplot;
+  protected ShapeRectangle rectangle1;
+  protected ShapeRectangle rectangle;
+  protected ShapeRectangle rectangle6;
+  protected ShapeText text24;
+  
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private void _rectangle7_SetDynamicParams_xjal( ShapeRectangle shape ) {
+    shape.setFillColor(
+selectedViewArea == view3D ?
+	darkGreen : green 
+);
+  }
+  
+  protected ShapeRectangle rectangle7;
+  protected ShapeText text25;
+  
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private void _rectangle8_SetDynamicParams_xjal( ShapeRectangle shape ) {
+    shape.setFillColor(
+selectedViewArea == view2D ?
+	darkGreen : green
+ 
+);
+  }
+  
+  protected ShapeRectangle rectangle8;
+  protected ShapeText text16;
+  
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  private void _rectangle9_SetDynamicParams_xjal( ShapeRectangle shape ) {
+    shape.setFillColor(
+selectedViewArea == viewStatistics ?
+	darkGreen : green
+ 
+);
+  }
+  
+  protected ShapeRectangle rectangle9;
+  protected ShapeText text17;
+  protected ShapeRectangle rectangle16;
+  protected ShapeText textsimtime;
+  protected ShapeText text18;
+  protected ShapeText text22;
+  protected ShapeText textavesalinity;
+  protected ShapeText text26;
+  protected ShapeText textaveIF;
+  protected ShapeGroup groupMainMenu;
+  protected ShapeCanvas mapCanvas;
+  protected ShapeGroup canvasenv;
+  
+  /**
+   * <i>This method should not be called by user</i>
+   */
+  @AnyLogicInternalCodegenAPI
+  protected ShapeEmbeddedObjectPresentation _mangroves_presentation_createShapeWithStaticProperties_xjal( final Agent _a, final int _index ) {
+    ShapeEmbeddedObjectPresentation shape = new ShapeEmbeddedObjectPresentation( Main.this, SHAPE_DRAW_2D3D, true, 117.0, 112.0, 0.0, 0.0,
+		true, true, _a );
+
+    return shape;
+  }
+
+  protected ShapeAgentPopulationGroup mangroves_presentation;
+  protected ShapeRectangle shapeAltColor30;
+  protected ShapeRectangle shapeAltColor28;
+  protected ShapeRectangle shapeAltColor26;
+  protected ShapeRectangle shapeAltColor24;
+  protected ShapeRectangle shapeAltColor22;
+  protected ShapeRectangle shapeAltColor20;
+  protected ShapeRectangle shapeAltColor18;
+  protected ShapeRectangle shapeAltColor16;
+  protected ShapeText text;
+  protected ShapeText text1;
+  protected ShapeText text2;
+  protected ShapeText text3;
+  protected ShapeText text4;
+  protected Camera3D camera;
+  protected ShapeLine line1;
+  protected ShapeLine line2;
+  protected ShapeLine line3;
+  protected ShapeText text6;
+  protected ShapeOval oval;
+  protected ShapeOval oval1;
+  protected ShapeText text7;
+  protected ShapeOval oval2;
+  protected ShapeOval oval3;
+  protected ShapeText text8;
+  protected ShapeOval oval4;
+  protected ShapeOval oval5;
+  protected ShapeText text9;
+  protected ShapeLine line4;
+  protected ShapeLine line5;
+  protected ShapeText text10;
+  protected ShapeText text13;
+  protected ShapeText text15;
+  protected ShapeRectangle shapeAltColor14;
+  protected ShapeRectangle shapeAltColorNoVal;
+  protected ShapeText text5;
+  protected ShapeText text11;
+  protected ShapeRectangle shapeAltColor32;
+  protected ShapeOval oval6;
+  protected ShapeOval oval7;
+  protected ShapeText text12;
+  protected ShapeOval oval8;
+  protected ShapeOval oval9;
+  protected ShapeText text19;
+  protected ShapeOval oval10;
+  protected ShapeOval oval11;
+  protected ShapeText text20;
+  protected ShapeOval oval12;
+  protected ShapeOval oval13;
+  protected ShapeText text21;
+  protected ShapeOval oval14;
+  protected ShapeOval oval15;
+  protected ShapeText text23;
+  protected ShapeOval oval18;
+  protected ShapeOval oval19;
+  protected ShapeText text28;
+  @AnyLogicInternalCodegenAPI
+  private void _createPersistentElementsBP0_xjal() {
+    camera = new Camera3D( -492.17, -449.04, 868.11, 0.43650684991852345, 0.7562511968470761 );
+
+    window3d = new ShapeWindow3D( Main.this, false, 0.0, 1290.0, 1140.0, 1090.0, WINDOW_3D_NAVIGATION_FULL, 3000.0 );
+
+    rectangle1 = new ShapeRectangle(
+       SHAPE_DRAW_2D3D, true,117.0, 112.0, 0.0, 0.0, 
+            black, white,
+			1000.0, 1000.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    rectangle = new ShapeRectangle(
+       SHAPE_DRAW_2D, true,0.0, 2450.0, 0.0, 0.0, 
+            null, gainsboro,
+			1140.0, 1090.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    rectangle6 = new ShapeRectangle(
+       SHAPE_DRAW_2D, true,0.0, 0.0, 0.0, 0.0, 
+            null, darkGreen,
+			340.0, 50.0, 10.0, 1.0, LINE_STYLE_SOLID ) {
+
+      @Override
+      @AnyLogicInternalCodegenAPI
+      public boolean onClick( double clickx, double clicky ) {
+        return onShapeClick( _rectangle6, 0, clickx, clicky );
+      }
+    };
+
+    text24 = new ShapeText(
+        SHAPE_DRAW_2D, true,16.0, 10.0, 0.0, 0.0, 
+        white,"Mangrove Stand Dynamics",
+        _text24_Font, ALIGNMENT_LEFT );
+
+    rectangle7 = new ShapeRectangle(
+       SHAPE_DRAW_2D, true,340.0, 0.0, 0.0, 0.0, 
+            null, green,
+			60.0, 50.0, 10.0, 1.0, LINE_STYLE_SOLID ) {
+      @Override
+      public void updateDynamicProperties() {
+        _rectangle7_SetDynamicParams_xjal( this );
+        super.updateDynamicProperties();
+      }
+
+      @Override
+      @AnyLogicInternalCodegenAPI
+      public boolean onClick( double clickx, double clicky ) {
+        return onShapeClick( _rectangle7, 0, clickx, clicky );
+      }
+    };
+
+    text25 = new ShapeText(
+        SHAPE_DRAW_2D, true,368.0, 10.0, 0.0, 0.0, 
+        white,"3D",
+        _text25_Font, ALIGNMENT_CENTER );
+
+    rectangle8 = new ShapeRectangle(
+       SHAPE_DRAW_2D, true,400.0, 0.0, 0.0, 0.0, 
+            null, green,
+			60.0, 50.0, 10.0, 1.0, LINE_STYLE_SOLID ) {
+      @Override
+      public void updateDynamicProperties() {
+        _rectangle8_SetDynamicParams_xjal( this );
+        super.updateDynamicProperties();
+      }
+
+      @Override
+      @AnyLogicInternalCodegenAPI
+      public boolean onClick( double clickx, double clicky ) {
+        return onShapeClick( _rectangle8, 0, clickx, clicky );
+      }
+    };
+
+    text16 = new ShapeText(
+        SHAPE_DRAW_2D, true,429.0, 10.0, 0.0, 0.0, 
+        white,"2D",
+        _text16_Font, ALIGNMENT_CENTER );
+
+    rectangle9 = new ShapeRectangle(
+       SHAPE_DRAW_2D, true,460.0, 0.0, 0.0, 0.0, 
+            null, green,
+			140.0, 50.0, 10.0, 1.0, LINE_STYLE_SOLID ) {
+      @Override
+      public void updateDynamicProperties() {
+        _rectangle9_SetDynamicParams_xjal( this );
+        super.updateDynamicProperties();
+      }
+
+      @Override
+      @AnyLogicInternalCodegenAPI
+      public boolean onClick( double clickx, double clicky ) {
+        return onShapeClick( _rectangle9, 0, clickx, clicky );
+      }
+    };
+
+    text17 = new ShapeText(
+        SHAPE_DRAW_2D, true,530.0, 10.0, 0.0, 0.0, 
+        white,"Statistics",
+        _text17_Font, ALIGNMENT_CENTER );
+
+    rectangle16 = new ShapeRectangle(
+       SHAPE_DRAW_2D, true,600.0, 0.0, 0.0, 0.0, 
+            null, green,
+			540.0, 50.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    textsimtime = new ShapeText(
+        SHAPE_DRAW_2D, true,783.0, 15.0, 0.0, 0.0, 
+        white,"0",
+        _textsimtime_Font, ALIGNMENT_RIGHT );
+
+    text18 = new ShapeText(
+        SHAPE_DRAW_2D, true,683.0, 15.0, 0.0, 0.0, 
+        white,"Simulation Year:",
+        _text18_Font, ALIGNMENT_CENTER );
+
+    text22 = new ShapeText(
+        SHAPE_DRAW_2D, true,863.0, 15.0, 0.0, 0.0, 
+        white,"Ave salinity:",
+        _text22_Font, ALIGNMENT_CENTER );
+
+    textavesalinity = new ShapeText(
+        SHAPE_DRAW_2D, true,973.0, 15.0, 0.0, 0.0, 
+        white,"0",
+        _textavesalinity_Font, ALIGNMENT_RIGHT );
+
+    text26 = new ShapeText(
+        SHAPE_DRAW_2D, true,1033.0, 15.0, 0.0, 0.0, 
+        white,"Ave IF:",
+        _text26_Font, ALIGNMENT_CENTER );
+
+    textaveIF = new ShapeText(
+        SHAPE_DRAW_2D, true,1123.0, 15.0, 0.0, 0.0, 
+        white,"0",
+        _textaveIF_Font, ALIGNMENT_RIGHT );
+
+    mapCanvas = new ShapeCanvas( true, -498.502, -498.502, 0.0, 997.006, 997.006 );
+
+    shapeAltColor30 = new ShapeRectangle(
+       SHAPE_DRAW_2D, true,-80.0, 880.0, 0.0, 0.0, 
+            null, _shapeAltColor30_Fill_Color,
+			20.0, 20.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    shapeAltColor28 = new ShapeRectangle(
+       SHAPE_DRAW_2D, true,-80.0, 900.0, 0.0, 0.0, 
+            null, _shapeAltColor28_Fill_Color,
+			20.0, 20.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    shapeAltColor26 = new ShapeRectangle(
+       SHAPE_DRAW_2D, true,-80.0, 920.0, 0.0, 0.0, 
+            null, _shapeAltColor26_Fill_Color,
+			20.0, 20.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    shapeAltColor24 = new ShapeRectangle(
+       SHAPE_DRAW_2D, true,-80.0, 940.0, 0.0, 0.0, 
+            null, _shapeAltColor24_Fill_Color,
+			20.0, 20.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    shapeAltColor22 = new ShapeRectangle(
+       SHAPE_DRAW_2D, true,-80.0, 960.0, 0.0, 0.0, 
+            null, _shapeAltColor22_Fill_Color,
+			20.0, 20.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    shapeAltColor20 = new ShapeRectangle(
+       SHAPE_DRAW_2D, true,-80.0, 980.0, 0.0, 0.0, 
+            null, _shapeAltColor20_Fill_Color,
+			20.0, 20.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    shapeAltColor18 = new ShapeRectangle(
+       SHAPE_DRAW_2D, true,-80.0, 1000.0, 0.0, 0.0, 
+            null, _shapeAltColor18_Fill_Color,
+			20.0, 20.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    shapeAltColor16 = new ShapeRectangle(
+       SHAPE_DRAW_2D, true,-80.0, 1020.0, 0.0, 0.0, 
+            null, _shapeAltColor16_Fill_Color,
+			20.0, 20.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    text = new ShapeText(
+        SHAPE_DRAW_2D, true,-55.0, 894.0, 0.0, 0.0, 
+        black,"28",
+        _text_Font, ALIGNMENT_LEFT );
+
+    text1 = new ShapeText(
+        SHAPE_DRAW_2D, true,-55.0, 934.0, 0.0, 0.0, 
+        black,"24",
+        _text1_Font, ALIGNMENT_LEFT );
+
+    text2 = new ShapeText(
+        SHAPE_DRAW_2D, true,-55.0, 974.0, 0.0, 0.0, 
+        black,"20",
+        _text2_Font, ALIGNMENT_LEFT );
+
+    text3 = new ShapeText(
+        SHAPE_DRAW_2D, true,-55.0, 1015.0, 0.0, 0.0, 
+        black,"16",
+        _text3_Font, ALIGNMENT_LEFT );
+
+    text4 = new ShapeText(
+        SHAPE_DRAW_2D, true,-55.0, 1055.0, 0.0, 0.0, 
+        black,"12",
+        _text4_Font, ALIGNMENT_LEFT );
+
+    line1 = new ShapeLine(
+		SHAPE_DRAW_2D, true, 150.0, 80.0, 0.0, black, 
+ 		60.0,	0.0, 0.0, 1.0, 10.0, LINE_STYLE_SOLID );
+
+    line2 = new ShapeLine(
+		SHAPE_DRAW_2D, true, 150.0, 90.0, 0.0, black, 
+ 		0.0,	-20.0, 0.0, 1.0, 10.0, LINE_STYLE_SOLID );
+
+    line3 = new ShapeLine(
+		SHAPE_DRAW_2D, true, 211.0, 90.0, 0.0, black, 
+ 		0.0,	-20.0, 0.0, 1.0, 10.0, LINE_STYLE_SOLID );
+
+    text6 = new ShapeText(
+        SHAPE_DRAW_2D, true,170.0, 80.0, 0.0, 0.0, 
+        black,"3 m",
+        _text6_Font, ALIGNMENT_LEFT );
+
+    oval = new ShapeOval(
+       SHAPE_DRAW_2D, true,40.0, 100.0, 0.0, 0.0, 
+       null, _oval_Fill_Color,
+	   30.0, 30.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    oval1 = new ShapeOval(
+       SHAPE_DRAW_2D, true,40.0, 100.0, 0.0, 0.0, 
+       null, darkGray,
+	   5.0, 5.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    text7 = new ShapeText(
+        SHAPE_DRAW_2D, true,10.0, 140.0, 0.0, 0.0, 
+        black,"Avicennia\r\nmarina\r\n",
+        _text7_Font, ALIGNMENT_LEFT );
+
+    oval2 = new ShapeOval(
+       SHAPE_DRAW_2D, true,40.0, 220.0, 0.0, 0.0, 
+       null, _oval2_Fill_Color,
+	   30.0, 30.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    oval3 = new ShapeOval(
+       SHAPE_DRAW_2D, true,40.0, 220.0, 0.0, 0.0, 
+       null, gray,
+	   5.0, 5.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    text8 = new ShapeText(
+        SHAPE_DRAW_2D, true,10.0, 260.0, 0.0, 0.0, 
+        black,"Avicennia\r\nofficinalis",
+        _text8_Font, ALIGNMENT_LEFT );
+
+    oval4 = new ShapeOval(
+       SHAPE_DRAW_2D, true,40.0, 460.0, 0.0, 0.0, 
+       null, _oval4_Fill_Color,
+	   30.0, 30.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    oval5 = new ShapeOval(
+       SHAPE_DRAW_2D, true,40.0, 460.0, 0.0, 0.0, 
+       null, red,
+	   5.0, 5.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    text9 = new ShapeText(
+        SHAPE_DRAW_2D, true,10.0, 500.0, 0.0, 0.0, 
+        black,"Nypa\r\nfruticans",
+        _text9_Font, ALIGNMENT_LEFT );
+
+    line4 = new ShapeLine(
+		SHAPE_DRAW_2D, true, 170.0, 80.0, 0.0, black, 
+ 		0.0,	-10.0, 0.0, 1.0, 10.0, LINE_STYLE_SOLID );
+
+    line5 = new ShapeLine(
+		SHAPE_DRAW_2D, true, 190.0, 80.0, 0.0, black, 
+ 		0.0,	-10.0, 0.0, 1.0, 10.0, LINE_STYLE_SOLID );
+
+    text10 = new ShapeText(
+        SHAPE_DRAW_2D, true,-70.0, 810.0, 0.0, 0.0, 
+        black,"Salinity\r\n levels (ppt)",
+        _text10_Font, ALIGNMENT_LEFT );
+
+    text13 = new ShapeText(
+        SHAPE_DRAW_2D, true,570.0, 2470.0, 0.0, 0.0, 
+        black,"DOMINANCE (BIOMASS) TIME PLOT",
+        _text13_Font, ALIGNMENT_CENTER );
+
+    text15 = new ShapeText(
+        SHAPE_DRAW_2D, true,560.0, 3180.0, 0.0, 0.0, 
+        black,"TOTAL ABOVE GROUND BIOMASS TIME PLOT",
+        _text15_Font, ALIGNMENT_CENTER );
+
+    shapeAltColor14 = new ShapeRectangle(
+       SHAPE_DRAW_2D, true,-80.0, 1040.0, 0.0, 0.0, 
+            null, _shapeAltColor14_Fill_Color,
+			20.0, 20.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    shapeAltColorNoVal = new ShapeRectangle(
+       SHAPE_DRAW_2D, true,-120.0, 560.0, 0.0, 0.0, 
+            null, black,
+			20.0, 20.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    text5 = new ShapeText(
+        SHAPE_DRAW_2D, true,-100.0, 560.0, 0.0, 0.0, 
+        black,"No value",
+        _text5_Font, ALIGNMENT_LEFT );
+
+    text11 = new ShapeText(
+        SHAPE_DRAW_2D, true,-55.0, 855.0, 0.0, 0.0, 
+        black,"32",
+        _text11_Font, ALIGNMENT_LEFT );
+
+    shapeAltColor32 = new ShapeRectangle(
+       SHAPE_DRAW_2D, true,-80.0, 860.0, 0.0, 0.0, 
+            null, _shapeAltColor32_Fill_Color,
+			20.0, 20.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    oval6 = new ShapeOval(
+       SHAPE_DRAW_2D, true,40.0, 580.0, 0.0, 0.0, 
+       null, _oval6_Fill_Color,
+	   30.0, 30.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    oval7 = new ShapeOval(
+       SHAPE_DRAW_2D, true,40.0, 580.0, 0.0, 0.0, 
+       null, green,
+	   5.0, 5.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    text12 = new ShapeText(
+        SHAPE_DRAW_2D, true,10.0, 620.0, 0.0, 0.0, 
+        black,"Camptostemon\r\nphilippinense",
+        _text12_Font, ALIGNMENT_LEFT );
+
+    oval8 = new ShapeOval(
+       SHAPE_DRAW_2D, true,40.0, 700.0, 0.0, 0.0, 
+       null, _oval8_Fill_Color,
+	   30.0, 30.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    oval9 = new ShapeOval(
+       SHAPE_DRAW_2D, true,40.0, 700.0, 0.0, 0.0, 
+       null, orange,
+	   5.0, 5.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    text19 = new ShapeText(
+        SHAPE_DRAW_2D, true,10.0, 740.0, 0.0, 0.0, 
+        black,"Sonneratia\r\nalba",
+        _text19_Font, ALIGNMENT_LEFT );
+
+    oval10 = new ShapeOval(
+       SHAPE_DRAW_2D, true,40.0, 820.0, 0.0, 0.0, 
+       null, _oval10_Fill_Color,
+	   30.0, 30.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    oval11 = new ShapeOval(
+       SHAPE_DRAW_2D, true,40.0, 820.0, 0.0, 0.0, 
+       null, purple,
+	   5.0, 5.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    text20 = new ShapeText(
+        SHAPE_DRAW_2D, true,10.0, 860.0, 0.0, 0.0, 
+        black,"Xylocarpus\r\ngranatum",
+        _text20_Font, ALIGNMENT_LEFT );
+
+    oval12 = new ShapeOval(
+       SHAPE_DRAW_2D, true,40.0, 940.0, 0.0, 0.0, 
+       null, _oval12_Fill_Color,
+	   30.0, 30.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    oval13 = new ShapeOval(
+       SHAPE_DRAW_2D, true,40.0, 940.0, 0.0, 0.0, 
+       null, yellow,
+	   5.0, 5.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    text21 = new ShapeText(
+        SHAPE_DRAW_2D, true,10.0, 980.0, 0.0, 0.0, 
+        black,"Ceriops\r\ndecandra",
+        _text21_Font, ALIGNMENT_LEFT );
+
+    oval14 = new ShapeOval(
+       SHAPE_DRAW_2D, true,40.0, 1060.0, 0.0, 0.0, 
+       null, _oval14_Fill_Color,
+	   30.0, 30.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    oval15 = new ShapeOval(
+       SHAPE_DRAW_2D, true,40.0, 1060.0, 0.0, 0.0, 
+       null, blue,
+	   5.0, 5.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    text23 = new ShapeText(
+        SHAPE_DRAW_2D, true,10.0, 1100.0, 0.0, 0.0, 
+        black,"Bruguiera\r\ncylindrica",
+        _text23_Font, ALIGNMENT_LEFT );
+
+    oval18 = new ShapeOval(
+       SHAPE_DRAW_2D, true,40.0, 340.0, 0.0, 0.0, 
+       null, _oval18_Fill_Color,
+	   30.0, 30.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    oval19 = new ShapeOval(
+       SHAPE_DRAW_2D, true,40.0, 340.0, 0.0, 0.0, 
+       null, lightGrey,
+	   5.0, 5.0, 10.0, 1.0, LINE_STYLE_SOLID );
+
+    text28 = new ShapeText(
+        SHAPE_DRAW_2D, true,10.0, 380.0, 0.0, 0.0, 
+        black,"Avicennia\r\nrumphiana",
+        _text28_Font, ALIGNMENT_LEFT );
+
+  }
+
+  @AnyLogicInternalCodegenAPI
+  private void _createPersistentElementsAP0_xjal() {
+    {
+    DataSet _item;
+    List<DataSet> _items = new ArrayList<DataSet>( 9 );
+    _items.add( _Speciescountplot_expression0_dataSet_xjal ); 
+    _items.add( _Speciescountplot_expression1_dataSet_xjal ); 
+    _items.add( _Speciescountplot_expression2_dataSet_xjal ); 
+    _items.add( _Speciescountplot_expression3_dataSet_xjal ); 
+    _items.add( _Speciescountplot_expression4_dataSet_xjal ); 
+    _items.add( _Speciescountplot_expression5_dataSet_xjal ); 
+    _items.add( _Speciescountplot_expression6_dataSet_xjal ); 
+    _items.add( _Speciescountplot_expression7_dataSet_xjal ); 
+    _items.add( _Speciescountplot_expression8_dataSet_xjal ); 
+    List<String> _titles = new ArrayList<String>( 9 );
+    _titles.add( "Avicennia marina" );
+    _titles.add( "Avicennia officinalis" );
+    _titles.add( "Avicennia rumphiana" );
+    _titles.add( "Nypa fruticans" );
+    _titles.add( "Camptostemon philippinense" );
+    _titles.add( "Sonneratia alba" );
+    _titles.add( "Xylocarpus granatum" );
+    _titles.add( "Ceriops decandra" );
+    _titles.add( "Bruguiera cylindrica" );
+    List<Chart2DPlot.Appearance> _appearances = new ArrayList<Chart2DPlot.Appearance>( 9 );
+    _appearances.add( new Chart2DPlot.Appearance( darkGray, true, true, Chart.INTERPOLATION_LINEAR, 3.0, Chart.POINT_NONE ) );
+    _appearances.add( new Chart2DPlot.Appearance( gray, true, true, Chart.INTERPOLATION_LINEAR, 3.0, Chart.POINT_NONE ) );
+    _appearances.add( new Chart2DPlot.Appearance( lightGrey, true, true, Chart.INTERPOLATION_LINEAR, 3.0, Chart.POINT_NONE ) );
+    _appearances.add( new Chart2DPlot.Appearance( red, true, true, Chart.INTERPOLATION_LINEAR, 3.0, Chart.POINT_NONE ) );
+    _appearances.add( new Chart2DPlot.Appearance( green, true, true, Chart.INTERPOLATION_LINEAR, 3.0, Chart.POINT_NONE ) );
+    _appearances.add( new Chart2DPlot.Appearance( orange, true, true, Chart.INTERPOLATION_LINEAR, 3.0, Chart.POINT_NONE ) );
+    _appearances.add( new Chart2DPlot.Appearance( purple, true, true, Chart.INTERPOLATION_LINEAR, 3.0, Chart.POINT_NONE ) );
+    _appearances.add( new Chart2DPlot.Appearance( yellow, true, true, Chart.INTERPOLATION_LINEAR, 3.0, Chart.POINT_NONE ) );
+    _appearances.add( new Chart2DPlot.Appearance( blue, true, true, Chart.INTERPOLATION_LINEAR, 3.0, Chart.POINT_NONE ) );
+    Speciescountplot = new TimePlot(
+		    Main.this, true, 180.0, 2480.0, 
+			760.0, 690.0,
+            null, null,
+            50.0, 30.0,
+			680.0, 560.0, white, black, black,
+            70.0, Chart.SOUTH,
+            
+100 
+            , Chart.WINDOW_MOVES_WITH_TIME, null, Chart.SCALE_AUTO,
+            0, 0, Chart.GRID_DEFAULT, Chart.GRID_DEFAULT,
+            darkGray, darkGray, _items, _titles, _appearances );
+
+    }
+    {
+    DataSet _item;
+    List<DataSet> _items = new ArrayList<DataSet>( 1 );
+    _items.add( _totalAGBplot_expression0_dataSet_xjal ); 
+    List<String> _titles = new ArrayList<String>( 1 );
+    _titles.add( "totalAGB" );
+    List<Chart2DPlot.Appearance> _appearances = new ArrayList<Chart2DPlot.Appearance>( 1 );
+    _appearances.add( new Chart2DPlot.Appearance( seaGreen, true, true, Chart.INTERPOLATION_LINEAR, 3.0, Chart.POINT_NONE ) );
+    totalAGBplot = new TimePlot(
+		    Main.this, true, 180.0, 3190.0, 
+			760.0, 300.0,
+            null, null,
+            50.0, 30.0,
+			680.0, 210.0, white, black, black,
+            30.0, Chart.SOUTH,
+            
+100 
+            , Chart.WINDOW_MOVES_WITH_TIME, null, Chart.SCALE_AUTO,
+            0, 0, Chart.GRID_DEFAULT, Chart.GRID_DEFAULT,
+            darkGray, darkGray, _items, _titles, _appearances );
+
+    }
+    {				
+    groupMainMenu = new ShapeGroup( Main.this, SHAPE_DRAW_2D3D, true, 0.0, 0.0, 0.0, 0.0
+	
+	     , rectangle6
+	     , text24
+	     , rectangle7
+	     , text25
+	     , rectangle8
+	     , text16
+	     , rectangle9
+	     , text17
+	     , rectangle16
+	     , textsimtime
+	     , text18
+	     , text22
+	     , textavesalinity
+	     , text26
+	     , textaveIF );
+
+    }
+    {				
+    canvasenv = new ShapeGroup( Main.this, SHAPE_DRAW_2D3D, true, 1700.0, 620.0, 0.0, 0.0
+	
+	     , mapCanvas ) {
+
+      @Override
+      @AnyLogicInternalCodegenAPI
+      public void onDraw() {
+        onShapeGroupDraw( _canvasenv, 0 );
+      }
+    };
+
+    }
+    mangroves_presentation = new ShapeAgentPopulationGroup(this, SHAPE_DRAW_2D3D, true, mangroves) {
+    
+      @Override
+      public ShapeEmbeddedObjectPresentation createShapeWithStaticProperties_xjal( final Agent _a, int index ) {
+        ShapeEmbeddedObjectPresentation _e = _mangroves_presentation_createShapeWithStaticProperties_xjal( _a, index );
+        return _e;
+      }
+    };
+  }
+
+  @AnyLogicInternalCodegenAPI
+  private void _createPersistentElementsBS0_xjal() {
+  }
+
+
+  // Static initialization of persistent elements
+  {
+    _createPersistentElementsBP0_xjal();
+  }
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public int getCameras3D(Map<String, Camera3D> _output) {
+    if ( _output != null ) {
+      _output.put( "camera", this.camera );
+    }
+    return 1 + super.getCameras3D( _output );
+  }
+  protected ShapeTopLevelPresentationGroup presentation;
+  protected ShapeModelElementsGroup icon; 
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public ShapeTopLevelPresentationGroup getPresentationShape() {
+    return presentation;
+  }
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public ShapeModelElementsGroup getModelElementsShape() {
+    return icon;
+  }
+
+  @AnyLogicInternalCodegenAPI
+  public void onAfterStepEnvironment() {
+    
+//updateSalinity();
+//updateInundation();
+updateFON();
+updateTime();
+/*while( lightnings.size() > 0 ) {
+        remove_lightnings( lightnings(0) );
+}*/ 
+  }
+
+  /**
+   * Constructor
+   */
+  public Main( Engine engine, Agent owner, AgentList<? extends Main> ownerPopulation ) {
+    super( engine, owner, ownerPopulation );
+    instantiateBaseStructureThis_xjal();
+  }
+
+  @AnyLogicInternalCodegenAPI
+  public void onOwnerChanged_xjal() {
+    super.onOwnerChanged_xjal();
+    setupReferences_xjal();
+  }
+
+  @AnyLogicInternalCodegenAPI
+  public void instantiateBaseStructure_xjal() {
+    super.instantiateBaseStructure_xjal();
+    instantiateBaseStructureThis_xjal();
+  }
+  
+  @AnyLogicInternalCodegenAPI
+  private void instantiateBaseStructureThis_xjal() {
+    setupReferences_xjal();
+    salinityASCII.readFile();
+    IFASCII.readFile();
+  }
+  
+  @AnyLogicInternalCodegenAPI
+  private void setupReferences_xjal() {
+  }
+  
+  /**
+   * Simple constructor. Please add created agent to some population by calling goToPopulation() function
+   */
+  public Main() {
+  }
+  
+  /**
+   * Simple constructor. Please add created agent to some population by calling goToPopulation() function
+   */
+  public Main( int NumberOfMangroves, int Toprow, int Leftcol, double SimExperimentNum, double SalinityValue, double IFValue ) {
+    markParametersAreSet();
+    this.NumberOfMangroves = NumberOfMangroves;
+    this.Toprow = Toprow;
+    this.Leftcol = Leftcol;
+    this.SimExperimentNum = SimExperimentNum;
+    this.SalinityValue = SalinityValue;
+    this.IFValue = IFValue;
+  }
+  
+  /**
+   * Creating embedded object instances
+   */
+  @AnyLogicInternalCodegenAPI
+  private void instantiatePopulations_xjal() {
+    {
+      int _cnt = 
+NumberOfMangroves 
+;
+      for ( int i = mangroves.size(); i < _cnt; i++ ) {
+        instantiate_mangroves_xjal( i );
+      }
+    }
+  }
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public void doCreate() {
+    super.doCreate();
+    // Creating embedded object instances
+    instantiatePopulations_xjal();
+    // Assigning initial values for plain variables
+    setupPlainVariables_Main_xjal();
+    // Dynamic initialization of persistent elements
+    _createPersistentElementsAP0_xjal();
+    presentation = new ShapeTopLevelPresentationGroup( Main.this, true, 0, 0, 0, 0 , rectangle1, rectangle, groupMainMenu, canvasenv, mangroves_presentation, shapeAltColor30, shapeAltColor28, shapeAltColor26, shapeAltColor24, shapeAltColor22, shapeAltColor20, shapeAltColor18, shapeAltColor16, text, text1, text2, text3, text4, camera, line1, line2, line3, text6, oval, oval1, text7, oval2, oval3, text8, oval4, oval5, text9, line4, line5, text10, text13, text15, shapeAltColor14, shapeAltColorNoVal, text5, text11, shapeAltColor32, oval6, oval7, text12, oval8, oval9, text19, oval10, oval11, text20, oval12, oval13, text21, oval14, oval15, text23, oval18, oval19, text28, window3d, Speciescountplot, totalAGBplot, 
+      // default light
+      new Light3D.Daylight( null, false, true ) );
+    presentation.getConfiguration3D().setBackgroundColor( white );
+    window3d.setCamera( camera, false );
+    // Creating embedded object instances
+    instantiatePopulations_xjal();
+    icon = new ShapeModelElementsGroup( Main.this, getElementProperty( "mangrove_dynamics.Main.icon", IElementDescriptor.MODEL_ELEMENT_DESCRIPTORS )  );
+    icon.setIconOffsets( 0.0, 0.0 );
+    // Environments setup
+    {
+      double _x_xjal = 
+1000 
+;
+      double _y_xjal = 
+1000 
+;
+      double _z_xjal = 
+0 
+;
+      setupSpace( _x_xjal, _y_xjal, _z_xjal );
+    }
+    {
+      double _v1_xjal;
+      _v1_xjal = 
+1.0 
+;
+      _v1_xjal = toModelTime( _v1_xjal, YEAR );
+      enableSteps( _v1_xjal );
+    }
+    setNetworkUserDefined();
+    setLayoutType( LAYOUT_USER_DEFINED );
+	 // Port connectors with non-replicated objects
+    // Creating replicated embedded objects
+    mangroves.setEnvironment( this );
+    for ( int i = 0; i < mangroves.size(); i++ ) {
+      Mangrove _a = mangroves.get(i); 
+      setupParameters_mangroves_xjal( _a, i, null );
+      doBeforeCreate_mangroves_xjal( _a, i, null );
+      _a.createAsEmbedded();
+    }
+    setupInitialConditions_xjal( Main.class );
+    // Dynamic initialization of persistent elements
+    _createPersistentElementsBS0_xjal();
+  }
+
+  @AnyLogicInternalCodegenAPI
+  public void setupExt_xjal(AgentExtension _ext) {
+    // Agent properties setup
+    if ( _ext instanceof ExtAgentWithSpatialMetrics && _ext instanceof ExtWithSpaceType && !(tryExt(ExtAgentWithSpatialMetrics.class) instanceof ExtWithSpaceType) ) {
+      double _speed;
+      _speed = 
+0 
+;
+      ((ExtAgentWithSpatialMetrics) _ext).setSpeed( _speed, MPS );
+    }
+  }
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public void doStart() {
+    super.doStart();
+    _NSpecies1ds_autoUpdateEvent_xjal.start();
+    _BiomassSpecies1ds_autoUpdateEvent_xjal.start();
+    _BiomassSpecies3ds_autoUpdateEvent_xjal.start();
+    _BiomassSpecies2ds_autoUpdateEvent_xjal.start();
+    _BiomassSpecies4ds_autoUpdateEvent_xjal.start();
+    _BiomassSpecies6ds_autoUpdateEvent_xjal.start();
+    _BiomassSpecies5ds_autoUpdateEvent_xjal.start();
+    _BiomassSpecies7ds_autoUpdateEvent_xjal.start();
+    _BiomassSpecies8ds_autoUpdateEvent_xjal.start();
+    _BiomassTotalds_autoUpdateEvent_xjal.start();
+    _CountTotalds_autoUpdateEvent_xjal.start();
+    _BiomassSpecies9ds_autoUpdateEvent_xjal.start();
+    _Speciescountplot_autoUpdateEvent_xjal.start();
+    _totalAGBplot_autoUpdateEvent_xjal.start();
+    for (Agent embeddedObject : mangroves) {
+      embeddedObject.startAsEmbedded();
+    }
+  }
+ 
+  @AnyLogicInternalCodegenAPI
+  public void onStartup() {
+    super.onStartup();
+    
+if (SimExperimentNum == 1){
+	SetupTestSalinity();
+	SetupTestIF();
+} else if (SimExperimentNum == 2){
+	SetupSiteSalinity();
+	SetupSiteIF();
+}
+placeMangroves();
+updateFON(); 
+  }
+
+  /**
+   * Assigning initial values for plain variables<br>
+   * <em>This method isn't designed to be called by user and may be removed in future releases.</em>
+   */
+  @AnyLogicInternalCodegenAPI
+  public void setupPlainVariables_xjal() {
+    setupPlainVariables_Main_xjal();
+  }
+
+  /**
+   * Assigning initial values for plain variables<br>
+   * <em>This method isn't designed to be called by user and may be removed in future releases.</em>
+   */
+  @AnyLogicInternalCodegenAPI
+  private void setupPlainVariables_Main_xjal() {
+    Salinity = 
+new double[100][100] 
+;
+    salincolor = 
+new Color[100][100] 
+;
+    FONabove = 
+new double[250][250] 
+;
+    FONbelow = 
+new double[250][250] 
+;
+    SimulationYear = 
+0 
+;
+    selectedViewArea = 
+view2D 
+;
+    salinsiteaverage = 
+0 
+;
+    IF = 
+new double[100][100] 
+;
+    IFsiteaverage = 
+0 
+;
+  }
+
+  // User API -----------------------------------------------------
+  @AnyLogicInternalCodegenAPI
+  public static LinkToAgentAnimationSettings _connections_commonAnimationSettings_xjal = new LinkToAgentAnimationSettingsImpl( false, black, 1.0, LINE_STYLE_SOLID, ARROW_NONE, 0.0 );
+
+  public LinkToAgentCollection<Agent, Agent> connections = new LinkToAgentStandardImpl<Agent, Agent>(this, _connections_commonAnimationSettings_xjal);
+  @Override
+  public LinkToAgentCollection<? extends Agent, ? extends Agent> getLinkToAgentStandard_xjal() {
+    return connections;
+  }
+
+
+  @AnyLogicInternalCodegenAPI
+  public void drawLinksToAgents(boolean _underAgents_xjal, LinkToAgentAnimator _animator_xjal) {
+    super.drawLinksToAgents(_underAgents_xjal, _animator_xjal);
+    if ( _underAgents_xjal ) {
+      _animator_xjal.drawLink( this, connections, true, true );
+    }
+  }
+
+  public List<Object> getEmbeddedObjects() {
+    List<Object> list = super.getEmbeddedObjects();
+    if (list == null) {
+      list = new LinkedList<Object>();
+    }
+    list.add( mangroves );
+    return list;
+  }
+
+  public AgentList<? extends Main> getPopulation() {
+    return (AgentList<? extends Main>) super.getPopulation();
+  }
+
+  public List<? extends Main> agentsInRange( double distance ) {
+    return (List<? extends Main>) super.agentsInRange( distance );
+  }
+
+  @Override
+  @AnyLogicInternalCodegenAPI
+  public boolean isLoggingToDB(EventOriginator _e) {
+    if ( _e == _NSpecies1ds_autoUpdateEvent_xjal ) return false;
+    if ( _e == _BiomassSpecies1ds_autoUpdateEvent_xjal ) return false;
+    if ( _e == _BiomassSpecies3ds_autoUpdateEvent_xjal ) return false;
+    if ( _e == _BiomassSpecies2ds_autoUpdateEvent_xjal ) return false;
+    if ( _e == _BiomassSpecies4ds_autoUpdateEvent_xjal ) return false;
+    if ( _e == _BiomassSpecies6ds_autoUpdateEvent_xjal ) return false;
+    if ( _e == _BiomassSpecies5ds_autoUpdateEvent_xjal ) return false;
+    if ( _e == _BiomassSpecies7ds_autoUpdateEvent_xjal ) return false;
+    if ( _e == _BiomassSpecies8ds_autoUpdateEvent_xjal ) return false;
+    if ( _e == _BiomassTotalds_autoUpdateEvent_xjal ) return false;
+    if ( _e == _CountTotalds_autoUpdateEvent_xjal ) return false;
+    if ( _e == _BiomassSpecies9ds_autoUpdateEvent_xjal ) return false;
+    if ( _e == _Speciescountplot_autoUpdateEvent_xjal ) return false;
+    if ( _e == _totalAGBplot_autoUpdateEvent_xjal ) return false;
+    return super.isLoggingToDB( _e );
+  }
+
+  @AnyLogicInternalCodegenAPI
+  public void onDestroy() {
+    _NSpecies1ds_autoUpdateEvent_xjal.onDestroy();
+    _BiomassSpecies1ds_autoUpdateEvent_xjal.onDestroy();
+    _BiomassSpecies3ds_autoUpdateEvent_xjal.onDestroy();
+    _BiomassSpecies2ds_autoUpdateEvent_xjal.onDestroy();
+    _BiomassSpecies4ds_autoUpdateEvent_xjal.onDestroy();
+    _BiomassSpecies6ds_autoUpdateEvent_xjal.onDestroy();
+    _BiomassSpecies5ds_autoUpdateEvent_xjal.onDestroy();
+    _BiomassSpecies7ds_autoUpdateEvent_xjal.onDestroy();
+    _BiomassSpecies8ds_autoUpdateEvent_xjal.onDestroy();
+    _BiomassTotalds_autoUpdateEvent_xjal.onDestroy();
+    _CountTotalds_autoUpdateEvent_xjal.onDestroy();
+    _BiomassSpecies9ds_autoUpdateEvent_xjal.onDestroy();
+    _Speciescountplot_autoUpdateEvent_xjal.onDestroy();
+    _totalAGBplot_autoUpdateEvent_xjal.onDestroy();
+    for (Agent _item : mangroves) {
+      _item.onDestroy();
+    }
+    salinityASCII.writeFile();
+    IFASCII.writeFile();
+  // Analysis Data Elements
+    _Speciescountplot_expression0_dataSet_xjal.destroyUpdater_xjal();
+    _Speciescountplot_expression1_dataSet_xjal.destroyUpdater_xjal();
+    _Speciescountplot_expression2_dataSet_xjal.destroyUpdater_xjal();
+    _Speciescountplot_expression3_dataSet_xjal.destroyUpdater_xjal();
+    _Speciescountplot_expression4_dataSet_xjal.destroyUpdater_xjal();
+    _Speciescountplot_expression5_dataSet_xjal.destroyUpdater_xjal();
+    _Speciescountplot_expression6_dataSet_xjal.destroyUpdater_xjal();
+    _Speciescountplot_expression7_dataSet_xjal.destroyUpdater_xjal();
+    _Speciescountplot_expression8_dataSet_xjal.destroyUpdater_xjal();
+    _totalAGBplot_expression0_dataSet_xjal.destroyUpdater_xjal();
+    NSpecies1ds.destroyUpdater_xjal();
+    BiomassSpecies1ds.destroyUpdater_xjal();
+    BiomassSpecies3ds.destroyUpdater_xjal();
+    BiomassSpecies2ds.destroyUpdater_xjal();
+    BiomassSpecies4ds.destroyUpdater_xjal();
+    BiomassSpecies6ds.destroyUpdater_xjal();
+    BiomassSpecies5ds.destroyUpdater_xjal();
+    BiomassSpecies7ds.destroyUpdater_xjal();
+    BiomassSpecies8ds.destroyUpdater_xjal();
+    BiomassTotalds.destroyUpdater_xjal();
+    CountTotalds.destroyUpdater_xjal();
+    BiomassSpecies9ds.destroyUpdater_xjal();
+    logToDB( NSpecies1ds, "NSpecies1ds" );
+    logToDB( BiomassSpecies1ds, "BiomassSpecies1ds" );
+    logToDB( BiomassSpecies3ds, "BiomassSpecies3ds" );
+    logToDB( BiomassSpecies2ds, "BiomassSpecies2ds" );
+    logToDB( BiomassSpecies4ds, "BiomassSpecies4ds" );
+    logToDB( BiomassSpecies6ds, "BiomassSpecies6ds" );
+    logToDB( BiomassSpecies5ds, "BiomassSpecies5ds" );
+    logToDB( BiomassSpecies7ds, "BiomassSpecies7ds" );
+    logToDB( BiomassSpecies8ds, "BiomassSpecies8ds" );
+    logToDB( BiomassTotalds, "BiomassTotalds" );
+    logToDB( CountTotalds, "CountTotalds" );
+    logToDB( BiomassSpecies9ds, "BiomassSpecies9ds" );
+    logToDB( _Speciescountplot_expression0_dataSet_xjal, "Speciescountplot : Avicennia marina" );
+    logToDB( _Speciescountplot_expression1_dataSet_xjal, "Speciescountplot : Avicennia officinalis" );
+    logToDB( _Speciescountplot_expression2_dataSet_xjal, "Speciescountplot : Avicennia rumphiana" );
+    logToDB( _Speciescountplot_expression3_dataSet_xjal, "Speciescountplot : Nypa fruticans" );
+    logToDB( _Speciescountplot_expression4_dataSet_xjal, "Speciescountplot : Camptostemon philippinense" );
+    logToDB( _Speciescountplot_expression5_dataSet_xjal, "Speciescountplot : Sonneratia alba" );
+    logToDB( _Speciescountplot_expression6_dataSet_xjal, "Speciescountplot : Xylocarpus granatum" );
+    logToDB( _Speciescountplot_expression7_dataSet_xjal, "Speciescountplot : Ceriops decandra" );
+    logToDB( _Speciescountplot_expression8_dataSet_xjal, "Speciescountplot : Bruguiera cylindrica" );
+    logToDB( _totalAGBplot_expression0_dataSet_xjal, "totalAGBplot : totalAGB" );
+    super.onDestroy();
+  }
+
+  @AnyLogicInternalCodegenAPI
+  @Override
+  public void doFinish() {
+    super.doFinish();
+    for (Agent _item : mangroves) {
+      _item.doFinish();
+    }
+    update_BiomassSpecies1after100yrs();
+    update_BiomassSpecies2after100yrs();
+    update_BiomassSpecies3after100yrs();
+    update_BiomassSpecies4after100yrs();
+    update_BiomassSpecies5after100yrs();
+    update_BiomassSpecies6after100yrs();
+    update_BiomassSpecies7after100yrs();
+    update_BiomassSpecies8after100yrs();
+    update_BiomassSpecies9after100yrs();
+    update_BiomassTotalafter100yrs();
+  }
+
+
+
+}
