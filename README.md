@@ -1,2 +1,2 @@
 # Mangrove-species-Dominance-Simulator
-This is the Java-based code (in AnyLogic) for the model MaDS (Mangrove species Dominance Simulator), an agent-based model that simulates the structures of mixed mangrove forest stands by considering specific responses of mangrove species to shading, salinity, and inundation frequencies.
+This is the Java-based code (in AnyLogic) for the model MaDS (Mangrove species Dominance Simulator), an agent-based model that simulates the structures of mixed mangrove forest stands by considering specific responses of mangrove species to shading, salinity, and inundation frequencies. The study can be accessed through this link: https://doi.org/10.1007/978-3-030-55867-3_9
